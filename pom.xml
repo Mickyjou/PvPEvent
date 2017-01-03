@@ -5,7 +5,16 @@
 	<artifactId>PvPEvent</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<name>PvPEvent</name>
+	<packaging>jar</packaging>
+	<properties>
+		<jdk.version>1.8</jdk.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.build.timestamp.format>yyyy-MM-dd HH:mm z</maven.build.timestamp.format>
+	</properties>
+
 	<build>
+
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
@@ -14,6 +23,28 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.google.code.maven-replacer-plugin</groupId>
+				<artifactId>replacer</artifactId>
+				<version>1.5.3</version>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>replace</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<file>${project.build.outputDirectory}/plugin.yml</file>
+					<replacements>
+						<replacement>
+							<token>VERSION</token>
+							<value>${project.version}</value>
+						</replacement>
+					</replacements>
 				</configuration>
 			</plugin>
 		</plugins>

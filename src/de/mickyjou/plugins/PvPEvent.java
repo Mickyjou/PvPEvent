@@ -22,4 +22,12 @@ public class PvPEvent extends JavaPlugin {
 		super.onLoad();
 	}
 
+	public void registerCommands() {
+
+	}
+
+	public void registerEvents() {
+		
+	}
+
 }

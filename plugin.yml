@@ -1,0 +1,4 @@
+name: PvPEvent
+author: Mickyjou
+version: VERSION
+main: de.mickyjou.plugins.pvpevent.PvPEvent
