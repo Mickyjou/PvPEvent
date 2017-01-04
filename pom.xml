@@ -47,6 +47,23 @@
 					</replacements>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<appendAssemblyId>false</appendAssemblyId>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -56,6 +73,11 @@
 			<id>spigot-repo</id>
 			<url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
 		</repository>
+		<repository>
+			<id>wertarbyte-repo</id>
+			<url>https://nexus.wertarbyte.com/content/groups/public/</url>
+		</repository>
+
 	</repositories>
 
 	<dependencies>
@@ -64,6 +86,16 @@
 			<artifactId>bukkit</artifactId>
 			<version>1.8.8-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.craften.plugins.bkcommandapi</groupId>
+			<artifactId>BkCommandApi</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<artifactId>playerdatastore-api</artifactId>
+			<groupId>de.craften.plugins.playerdatastore</groupId>
+			<version>1.1.0</version>
 		</dependency>
 	</dependencies>
 </project>
