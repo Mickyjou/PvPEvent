@@ -1,6 +1,5 @@
 package listener;
 
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -10,11 +9,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.event.world.PortalCreateEvent.CreateReason;
 
-public class NetherPortalCreateListener implements Listener {
+public class PortalCreateListener implements Listener {
 	boolean allow;
+	
+	/*
+	 * Listener to allow creating portals just in case
+	 * a operator is close to it
+	 * 
+	 */
 
 	@EventHandler
-	public void onNetherPortalCreate(PortalCreateEvent e) {
+	public void onPortalCreate(PortalCreateEvent e) {
 		if (e.getReason() == CreateReason.FIRE) {
 			allow = false;
 			Block b = e.getBlocks().get(0);
@@ -22,7 +27,7 @@ public class NetherPortalCreateListener implements Listener {
 
 			for (Entity all : loc.getWorld().getNearbyEntities(b.getLocation(), 10, 10, 10)) {
 				if (all instanceof Player) {
-					if (((Player) all).getGameMode() == GameMode.CREATIVE)
+					if (((Player) all).isOp())
 						allow = true;
 				}
 			}

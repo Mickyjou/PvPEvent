@@ -1,22 +1,23 @@
 package de.mickyjou.plugins;
 
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import listener.NetherPortalCreateListener;
-import utils.WorldBoarder;
+import listener.PlayerMoveListener;
+import listener.PortalCreateListener;
+import utils.SchematicManager;
 
 public class PvPEvent extends JavaPlugin {
+
+	SchematicManager sm;
 
 	@Override
 	public void onEnable() {
 		registerCommands();
 		registerEvents();
+		sm = new SchematicManager(this);
+
 		super.onEnable();
-		System.out.println(WorldBoarder.getWorldBorderSize(Bukkit.getWorld("world")));
-		WorldBoarder.setWorldBoarderSize(Bukkit.getWorld("world"), 50);
-		System.out.println(WorldBoarder.getWorldBorderSize(Bukkit.getWorld("world")));
 
 	}
 
@@ -31,13 +32,21 @@ public class PvPEvent extends JavaPlugin {
 		super.onLoad();
 	}
 
+	/**
+	 * Register all commands
+	 */
 	public void registerCommands() {
 
 	}
 
+	/**
+	 * register all Events
+	 */
+
 	public void registerEvents() {
 		PluginManager pm = this.getServer().getPluginManager();
-		pm.registerEvents(new NetherPortalCreateListener(), this);
+		pm.registerEvents(new PortalCreateListener(), this);
+		pm.registerEvents(new PlayerMoveListener(), this);
 	}
 
 }
