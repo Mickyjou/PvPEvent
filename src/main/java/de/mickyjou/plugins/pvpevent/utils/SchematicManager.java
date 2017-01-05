@@ -1,4 +1,4 @@
-package utils;
+package de.mickyjou.plugins.pvpevent.utils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,13 +14,13 @@ import java.util.Map;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 
-import de.mickyjou.plugins.PvPEvent;
+import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
 
 public class SchematicManager {
-	private PvPEvent plugin;
+	private PvPEventPlugin plugin;
 	Map<String, ArrayList<String>> schematics;
 
-	public SchematicManager(PvPEvent plugin) {
+	public SchematicManager(PvPEventPlugin plugin) {
 		this.plugin = plugin;
 		this.schematics = new HashMap<>();
 	}

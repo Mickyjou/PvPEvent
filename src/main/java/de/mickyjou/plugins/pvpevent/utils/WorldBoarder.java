@@ -1,4 +1,4 @@
-package utils;
+package de.mickyjou.plugins.pvpevent.utils;
 
 import org.bukkit.Location;
 import org.bukkit.World;

@@ -1,4 +1,4 @@
-package listener;
+package de.mickyjou.plugins.pvpevent.listener;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;

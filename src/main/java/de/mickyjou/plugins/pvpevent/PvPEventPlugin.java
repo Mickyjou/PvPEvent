@@ -1,4 +1,4 @@
-package de.mickyjou.plugins;
+package de.mickyjou.plugins.pvpevent;
 
 import java.io.File;
 
@@ -6,16 +6,16 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import commands.SchematicCommands;
-import commands.SkillsCommand;
+import de.mickyjou.plugins.pvpevent.commands.SchematicCommands;
+import de.mickyjou.plugins.pvpevent.commands.SkillsCommand;
 import de.craften.plugins.mcguilib.ViewManager;
-import listener.PlayerInteractListener;
-import listener.PlayerMoveListener;
-import listener.PortalCreateListener;
-import shop.SkillsView;
-import utils.SchematicManager;
+import de.mickyjou.plugins.pvpevent.listener.PlayerInteractListener;
+import de.mickyjou.plugins.pvpevent.listener.PlayerMoveListener;
+import de.mickyjou.plugins.pvpevent.listener.PortalCreateListener;
+import de.mickyjou.plugins.pvpevent.shop.SkillsView;
+import de.mickyjou.plugins.pvpevent.utils.SchematicManager;
 
-public class PvPEvent extends JavaPlugin {
+public class PvPEventPlugin extends JavaPlugin {
 
 	SchematicManager sm;
 	public static String prefix = ChatColor.GOLD + "[PvPEvent] " + ChatColor.GRAY;
@@ -46,7 +46,7 @@ public class PvPEvent extends JavaPlugin {
 	}
 
 	/**
-	 * Register all commands
+	 * Register all de.mickyjou.plugins.pvpevent.commands
 	 */
 	public void registerCommands() {
 		getCommand("schematic").setExecutor(new SchematicCommands(this));

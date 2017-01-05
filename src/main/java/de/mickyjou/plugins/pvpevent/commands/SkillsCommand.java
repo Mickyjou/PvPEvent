@@ -1,16 +1,16 @@
-package commands;
+package de.mickyjou.plugins.pvpevent.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.mickyjou.plugins.PvPEvent;
+import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
 
 public class SkillsCommand implements CommandExecutor {
-	private PvPEvent plugin;
+	private PvPEventPlugin plugin;
 
-	public SkillsCommand(PvPEvent plugin) {
+	public SkillsCommand(PvPEventPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -20,7 +20,7 @@ public class SkillsCommand implements CommandExecutor {
 			return true;
 		Player p = (Player) sender;
 		if (args.length > 0) {
-			p.sendMessage(PvPEvent.prefix + "/prefix");
+			p.sendMessage(PvPEventPlugin.prefix + "/prefix");
 			return true;
 		} else {
 

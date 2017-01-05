@@ -1,4 +1,4 @@
-package listener;
+package de.mickyjou.plugins.pvpevent.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

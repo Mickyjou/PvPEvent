@@ -1,4 +1,4 @@
-package shop;
+package de.mickyjou.plugins.pvpevent.shop;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

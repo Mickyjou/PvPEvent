@@ -1,4 +1,4 @@
-package utils;
+package de.mickyjou.plugins.pvpevent.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

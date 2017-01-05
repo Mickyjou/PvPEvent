@@ -1,4 +1,4 @@
-package utils;
+package de.mickyjou.plugins.pvpevent.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import de.mickyjou.plugins.PvPEvent;
+import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
 
 public class FileManager {
 
@@ -53,7 +53,7 @@ public class FileManager {
 	 * @return File
 	 */
 	public static File getDataFolder() {
-		return PvPEvent.getPlugin(PvPEvent.class).getDataFolder();
+		return PvPEventPlugin.getPlugin(PvPEventPlugin.class).getDataFolder();
 	}
 
 }

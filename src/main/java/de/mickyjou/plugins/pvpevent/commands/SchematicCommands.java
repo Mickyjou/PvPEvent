@@ -1,4 +1,4 @@
-package commands;
+package de.mickyjou.plugins.pvpevent.commands;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,19 +9,19 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import de.mickyjou.plugins.PvPEvent;
-import utils.SchematicManager;
+import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
+import de.mickyjou.plugins.pvpevent.utils.SchematicManager;
 
 public class SchematicCommands implements CommandExecutor {
 
 	private Player p;
-	public PvPEvent plugin;
+	public PvPEventPlugin plugin;
 	public static Map<Player, Location> loc1 = new HashMap<>();
 	public static Map<Player, Location> loc2 = new HashMap<>();
 
 	SchematicManager sm = new SchematicManager(plugin);
 
-	public SchematicCommands(PvPEvent plugin) {
+	public SchematicCommands(PvPEventPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -48,35 +48,35 @@ public class SchematicCommands implements CommandExecutor {
 				if (loc1.get(p) != null && loc2.get(p) != null) {
 					ArrayList<String> list = sm.blockListConverter(sm.getBlocks(loc1.get(p), loc2.get(p)), loc1.get(p));
 					if (sm.save(name, list)) {
-						p.sendMessage(PvPEvent.prefix + "Schematic erfolgreich gespeichert");
+						p.sendMessage(PvPEventPlugin.prefix + "Schematic erfolgreich gespeichert");
 					} else {
-						p.sendMessage(PvPEvent.prefix + "Fehler beim Speichern der Schematic");
+						p.sendMessage(PvPEventPlugin.prefix + "Fehler beim Speichern der Schematic");
 					}
 				}else{
-					p.sendMessage(PvPEvent.prefix + "Bitte wähle zwei Locations aus!");
+					p.sendMessage(PvPEventPlugin.prefix + "Bitte wï¿½hle zwei Locations aus!");
 				}
 			}
 			if (args[0].equalsIgnoreCase("paste")) {
 				if (sm.paste(name, p.getLocation().add(5, 0, 0))) {
-					p.sendMessage(PvPEvent.prefix + "Schematic erfolgreich eingefügt");
+					p.sendMessage(PvPEventPlugin.prefix + "Schematic erfolgreich eingefï¿½gt");
 				} else {
-					p.sendMessage(PvPEvent.prefix + "Fehler beim Einfügen der Schematic");
+					p.sendMessage(PvPEventPlugin.prefix + "Fehler beim Einfï¿½gen der Schematic");
 				}
 
 			}
 			if (args[0].equalsIgnoreCase("delete")) {
 				if (sm.delete(name)) {
-					p.sendMessage(PvPEvent.prefix + "Schematic erfolgreich gelöscht");
+					p.sendMessage(PvPEventPlugin.prefix + "Schematic erfolgreich gelï¿½scht");
 				}else{
-					p.sendMessage(PvPEvent.prefix + "Die Schematic existiert nicht");
+					p.sendMessage(PvPEventPlugin.prefix + "Die Schematic existiert nicht");
 				}
 			}
 			if (args[0].equalsIgnoreCase("load")) {
 				if (sm.load(name)) {
 
-					p.sendMessage(PvPEvent.prefix + "Schematic erfolgreich geladen");
+					p.sendMessage(PvPEventPlugin.prefix + "Schematic erfolgreich geladen");
 				}else{
-					p.sendMessage(PvPEvent.prefix + "Fehler beim Laden");
+					p.sendMessage(PvPEventPlugin.prefix + "Fehler beim Laden");
 				}
 
 			}
@@ -85,11 +85,11 @@ public class SchematicCommands implements CommandExecutor {
 	}
 
 	public void sendHelp() {
-		p.sendMessage(PvPEvent.prefix + " /schematics help");
-		p.sendMessage(PvPEvent.prefix + " /schematics delete [name]");
-		p.sendMessage(PvPEvent.prefix + " /schematics save [name]");
-		p.sendMessage(PvPEvent.prefix + " /schematics load [name]");
-		p.sendMessage(PvPEvent.prefix + " /schematics paste [name]");
+		p.sendMessage(PvPEventPlugin.prefix + " /schematics help");
+		p.sendMessage(PvPEventPlugin.prefix + " /schematics delete [name]");
+		p.sendMessage(PvPEventPlugin.prefix + " /schematics save [name]");
+		p.sendMessage(PvPEventPlugin.prefix + " /schematics load [name]");
+		p.sendMessage(PvPEventPlugin.prefix + " /schematics paste [name]");
 
 	}
 }
