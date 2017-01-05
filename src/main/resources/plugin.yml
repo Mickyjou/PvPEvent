@@ -2,7 +2,7 @@ name: PvPEvent
 author: Mickyjou
 version: VERSION
 main: de.mickyjou.plugins.pvpevent.PvPEventPlugin
-de.mickyjou.plugins.pvpevent.commands:
+commands:
      schematic:
      skills: 
      
