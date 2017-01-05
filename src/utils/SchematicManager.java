@@ -30,12 +30,17 @@ public class SchematicManager {
 	 * 
 	 * @param name
 	 */
-	public void load(String name) {
-		ArrayList<String> list = getSchematicStringList(name);
-		if (list != null && list.size() > 0)
-			schematics.put(name, list);
+	public boolean load(String name) {
+		if (new File(FileManager.getDataFolder() + "/schematics/", name + ".schematic").exists()) {
+			ArrayList<String> list = getSchematicStringList(name);
+			if (list != null && list.size() > 0) {
+				schematics.put(name, list);
+				return true;
+			}
+		}
+		return false;
 	}
-	
+
 	/**
 	 * Reads the schematic from a file
 	 * 
@@ -44,7 +49,7 @@ public class SchematicManager {
 	 */
 
 	public ArrayList<String> getSchematicStringList(String filename) {
-		File f = new File(plugin.getDataFolder().getAbsolutePath() + "/schematics", filename + "schematic");
+		File f = new File(FileManager.getDataFolder() + "/schematics/", filename + ".schematic");
 		FileReader fr = null;
 		try {
 			fr = new FileReader(f);
@@ -76,9 +81,9 @@ public class SchematicManager {
 	 * @param name
 	 * @param list
 	 */
-	public void save(String name, ArrayList<String> list) {
-		File f = new File(plugin.getDataFolder().getAbsolutePath() + "/schematics", name + ".schematic");
-		String newLine = System.getProperty("line.seperator");
+	public boolean save(String name, ArrayList<String> list) {
+		File f = new File(FileManager.getDataFolder() + "/schematics/", name + ".schematic");
+		String newLine = System.getProperty("line.separator");
 		if (f.exists()) {
 			f.delete();
 			try {
@@ -95,11 +100,11 @@ public class SchematicManager {
 				bw.write(newLine);
 			}
 			bw.close();
-			return;
+			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		return false;
 	}
 
 	/**
@@ -120,7 +125,7 @@ public class SchematicManager {
 	public ArrayList<Block> getBlocks(Location l1, Location l2) {
 		return new Cuboid(l1, l2).getBlocks();
 	}
-	
+
 	/**
 	 * paste the Schematic on the Location
 	 * 
@@ -128,10 +133,10 @@ public class SchematicManager {
 	 * @param loc
 	 */
 
-	public void paste(String name, Location loc) {
+	public boolean paste(String name, Location loc) {
 		ArrayList<String> list = schematics.get(name);
-		if (list == null || list.size() > 0)
-			return;
+		if (list == null || list.size() < 0)
+			return false;
 		for (String str : list) {
 			String[] s = str.split(":");
 			int x = Integer.parseInt(s[0]), y = Integer.parseInt(s[1]), z = Integer.parseInt(s[2]),
@@ -139,8 +144,9 @@ public class SchematicManager {
 			byte data = Byte.parseByte(s[4]);
 			loc.clone().add(x, y, z).getBlock().setTypeIdAndData(id, data, true);
 		}
+		return true;
 	}
-	
+
 	/**
 	 * Serealizes the Block into a String
 	 * 
@@ -155,9 +161,13 @@ public class SchematicManager {
 		int diffz = b.getZ() - loc.getBlockZ();
 		return diffx + ":" + diffy + ":" + diffz + ":" + b.getTypeId() + ":" + b.getData();
 	}
-	
-	public void delete(String filename){
-		File file = new File(plugin.getDataFolder().getAbsolutePath() + "/schematics", filename + ".schematic");
-		if(file.exists()) file.delete();
+
+	public boolean delete(String filename) {
+		File file = new File(plugin.getDataFolder() + "/schematics/", filename + ".schematic");
+		if (file.exists()) {
+			file.delete();
+			return true;
+		}
+		return false;
 	}
 }
