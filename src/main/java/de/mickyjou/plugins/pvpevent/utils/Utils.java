@@ -1,12 +1,13 @@
 package de.mickyjou.plugins.pvpevent.utils;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.WorldCreator;
-import org.bukkit.WorldType;
+import org.bukkit.*;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.generator.ChunkGenerator;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Utils {
 
@@ -67,12 +68,50 @@ public class Utils {
         }
     }
 
+    /**
+     * Creates a new World
+     *
+     * @param name
+     */
+
     public static void createNewWorld(String name) {
         WorldCreator wc = new WorldCreator(name);
         ChunkGenerator cg = new EventChunkGenerator();
         wc.type(WorldType.NORMAL);
         wc.generateStructures(true);
         wc.createWorld();
+    }
+
+    /**
+     * Gets the UUID's of the Owners from a EventChunk
+     *
+     * @param chunk
+     * @return
+     */
+
+    public static UUID[] getOwnersFromEventChunk(Chunk chunk) {
+        String c = chunk.getX() + ":" + chunk.getZ();
+        File file = new File(FileManager.getDataFolder() + "/chunks", "chunks.yml");
+        FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+
+        for (String keys : cfg.getKeys(false)) {
+            String[] chunks = keys.split(",");
+            for (String all : chunks) {
+                if (all != null && !all.isEmpty()) {
+                    String[] chunkString = all.split(":");
+                    int x = Integer.valueOf(chunkString[0]);
+                    int z = Integer.valueOf(chunkString[1]);
+                    Chunk newChunk = chunk.getWorld().getChunkAt(x, z);
+                    if (chunk == newChunk) {
+                        UUID[] toReturn = {UUID.fromString(cfg.getString(keys + ".owner1")), UUID.fromString(cfg.getString(keys + ".owner2"))};
+                        return toReturn;
+                    }
+
+
+                }
+            }
+        }
+        return null;
     }
 
 }

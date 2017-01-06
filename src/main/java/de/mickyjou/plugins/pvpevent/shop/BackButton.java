@@ -9,6 +9,13 @@ import de.craften.plugins.mcguilib.ClickListener;
 
 public class BackButton extends Button {
 
+	/**
+	 * Create a Button used as BackButton
+	 *
+	 * @param title
+	 * @param onClick
+	 */
+
 	public BackButton(String title, ClickListener onClick) {
 		super(Material.SKULL_ITEM, (byte) 3, title);
 		setOnClick(onClick);

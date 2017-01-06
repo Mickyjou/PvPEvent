@@ -53,14 +53,14 @@ public class SchematicCommands implements CommandExecutor {
 						p.sendMessage(PvPEventPlugin.prefix + "Fehler beim Speichern der Schematic");
 					}
 				}else{
-					p.sendMessage(PvPEventPlugin.prefix + "Bitte w�hle zwei Locations aus!");
+					p.sendMessage(PvPEventPlugin.prefix + "Bitte wähle zwei Locations aus!");
 				}
 			}
 			if (args[0].equalsIgnoreCase("paste")) {
 				if (sm.paste(name, p.getLocation().add(5, 0, 0))) {
-					p.sendMessage(PvPEventPlugin.prefix + "Schematic erfolgreich eingef�gt");
+					p.sendMessage(PvPEventPlugin.prefix + "Schematic erfolgreich eingefügt");
 				} else {
-					p.sendMessage(PvPEventPlugin.prefix + "Fehler beim Einf�gen der Schematic");
+					p.sendMessage(PvPEventPlugin.prefix + "Fehler beim Einfügen der Schematic");
 				}
 
 			}
