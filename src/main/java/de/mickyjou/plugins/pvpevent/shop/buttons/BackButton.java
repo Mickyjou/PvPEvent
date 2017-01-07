@@ -1,5 +1,6 @@
-package de.mickyjou.plugins.pvpevent.shop;
+package de.mickyjou.plugins.pvpevent.shop.buttons;
 
+import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;

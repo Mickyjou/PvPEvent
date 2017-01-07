@@ -1,6 +1,7 @@
 package de.mickyjou.plugins.pvpevent;
 
 import de.craften.plugins.bkcommandapi.SubCommandHandler;
+import de.craften.plugins.mcguilib.View;
 import de.craften.plugins.mcguilib.ViewManager;
 import de.mickyjou.plugins.pvpevent.commands.GenerateEventChunksCommand;
 import de.mickyjou.plugins.pvpevent.commands.SchematicCommands;
@@ -22,8 +23,8 @@ public class PvPEventPlugin extends JavaPlugin {
 
     SchematicManager sm;
     public static String prefix = ChatColor.GOLD + "[PvPEvent] " + ChatColor.GRAY;
-    public ViewManager vm;
-    public SkillsView skw;
+    static ViewManager vm;
+    static SkillsView skw;
 
     @Override
     public void onEnable() {
@@ -71,7 +72,7 @@ public class PvPEventPlugin extends JavaPlugin {
         skillsCommandHandler.addHandlers(new SkillsCommand(this));
         getCommand("skills").setExecutor(skillsCommandHandler);
 
-     getCommand("generate").setExecutor(new GenerateEventChunksCommand());
+        getCommand("generate").setExecutor(new GenerateEventChunksCommand());
 
     }
 
@@ -91,6 +92,14 @@ public class PvPEventPlugin extends JavaPlugin {
         if (!file.exists())
             file.mkdirs();
 
+    }
+
+    public static ViewManager getViewManager() {
+        return vm;
+    }
+
+    public static SkillsView getSkillsView() {
+        return skw;
     }
 
 }

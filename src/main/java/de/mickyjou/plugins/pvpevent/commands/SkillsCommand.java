@@ -26,9 +26,7 @@ public class SkillsCommand implements CommandHandler {
 			usage = "skills"
 	)
 	public void openSkillsMenu(Player p){
-		plugin.skw.open(
-				p
-		);
+		PvPEventPlugin.getSkillsView().openSkillsMenu(p);
 	}
 
 }
