@@ -2,6 +2,7 @@ package de.mickyjou.plugins.pvpevent;
 
 import de.craften.plugins.bkcommandapi.SubCommandHandler;
 import de.craften.plugins.mcguilib.ViewManager;
+import de.mickyjou.plugins.pvpevent.commands.GenerateEventChunksCommand;
 import de.mickyjou.plugins.pvpevent.commands.SchematicCommands;
 import de.mickyjou.plugins.pvpevent.commands.SkillsCommand;
 import de.mickyjou.plugins.pvpevent.listener.PlayerInteractListener;
@@ -51,7 +52,6 @@ public class PvPEventPlugin extends JavaPlugin {
      * Register all de.mickyjou.plugins.pvpevent.commands
      */
     public void registerCommands() {
-        getCommand("schematic").setExecutor(new SchematicCommands(this));
 
         SubCommandHandler skillsCommandHandler = new SubCommandHandler("skills") {
             @Override
@@ -64,8 +64,14 @@ public class PvPEventPlugin extends JavaPlugin {
                 commandSender.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
             }
         };
+
+
+        getCommand("schematic").setExecutor(new SchematicCommands(this));
+
         skillsCommandHandler.addHandlers(new SkillsCommand(this));
         getCommand("skills").setExecutor(skillsCommandHandler);
+
+     getCommand("generate").setExecutor(new GenerateEventChunksCommand());
 
     }
 

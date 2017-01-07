@@ -4,5 +4,10 @@ version: VERSION
 main: de.mickyjou.plugins.pvpevent.PvPEventPlugin
 commands:
      schematic:
-     skills: 
+          description: Main command for the Schematic Manager
+     skills:
+          description: Opens the Skills-Menu
+     generate:
+          description: Generates EventChunks with the size of 4x4 Chunks
+
      

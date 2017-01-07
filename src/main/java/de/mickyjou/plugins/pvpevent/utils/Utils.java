@@ -1,12 +1,15 @@
 package de.mickyjou.plugins.pvpevent.utils;
 
 import org.bukkit.*;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.UUID;
 
 public class Utils {
@@ -112,6 +115,24 @@ public class Utils {
             }
         }
         return null;
+    }
+
+    /**
+     * Generate EventChunks with the size of 4x4 Chunks
+     *
+     * @param chunkRadius
+     * @param world
+     */
+
+    public static void generateEventChunks(int chunkRadius, World world) {
+        for (int x = -(chunkRadius); x <= chunkRadius; x += 2) {
+            for (int z = -(chunkRadius); z <= chunkRadius; z += 2) {
+                Chunk[] chunk = {world.getChunkAt(x, z), world.getChunkAt(x + 1, z), world.getChunkAt(x, z + 1), world.getChunkAt(x+1, z+1)};
+                EventChunk eventchunk = new EventChunk(chunk);
+                eventchunk.save();
+
+            }
+        }
     }
 
 }
