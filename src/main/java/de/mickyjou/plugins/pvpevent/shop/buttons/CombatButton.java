@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 public class CombatButton extends Button {
 
     public CombatButton( Player viewer, ClickListener onClick) {
-        super(Material.DIAMOND_AXE, "§7Combat", "§7Oeffne das Combat-Menu");
+        super(Material.DIAMOND_AXE, "§7Combat", "§7Öffne das Combat-Menu");
         setOnClick(onClick);
     }
 

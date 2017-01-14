@@ -12,7 +12,7 @@ public class SkillsView {
     }
 
     public void openSkillsMenu(Player p) {
-        viewManager.showView(p, new SkillsGroupView());
+        viewManager.showView(p, new SkillsGroupView(p));
     }
 
     public void openCombatMenu(Player p) {

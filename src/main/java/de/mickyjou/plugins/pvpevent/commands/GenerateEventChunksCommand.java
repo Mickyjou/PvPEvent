@@ -34,12 +34,12 @@ public class GenerateEventChunksCommand implements CommandExecutor {
                 p.sendMessage(PvPEventPlugin.prefix + "Bitte gib eine gültige Zahl ein.");
                 return true;
             }
-            if(Math.round(radius / 4) == radius/4) {
+            if(radius % 4 == 0) {
                 Utils.generateEventChunks(radius, p.getWorld());
                 p.sendMessage(PvPEventPlugin.prefix + "Erfolgreich " + ChatColor.GOLD + radius/4 + ChatColor.GRAY + "EventChunks erstellt!");
                 return true;
             }else{
-                p.sendMessage(PvPEventPlugin.prefix + "Bitte gib eine Zahl ein, die durch vier geteilt grade ist.");
+                p.sendMessage(PvPEventPlugin.prefix + "Bitte gib ein vielfaches von 4 an");
             }
 
 

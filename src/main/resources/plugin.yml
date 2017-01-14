@@ -2,6 +2,7 @@ name: PvPEvent
 author: Mickyjou
 version: VERSION
 main: de.mickyjou.plugins.pvpevent.PvPEventPlugin
+depend: [PlayerDataStore]
 commands:
      schematic:
           description: Main command for the Schematic Manager
@@ -9,5 +10,9 @@ commands:
           description: Opens the Skills-Menu
      generate:
           description: Generates EventChunks with the size of 4x4 Chunks
+     team:
+          description: shows your team and create new teams
+     teams:
+          description: shows all teams
 
      

@@ -7,8 +7,6 @@ import org.bukkit.ChatColor;
 import de.craften.plugins.mcguilib.SinglePageView;
 import org.bukkit.entity.Player;
 
-import javax.sound.midi.SysexMessage;
-
 public class SkillsGroupView extends SinglePageView {
 
     /**
@@ -16,10 +14,10 @@ public class SkillsGroupView extends SinglePageView {
      *
      */
 
-    public SkillsGroupView() {
+    public SkillsGroupView(Player p) {
         super(ChatColor.GRAY + "Skills", 27);
-        Player p = getViewer();
-        addElement(new CombatButton(p, (e) -> PvPEventPlugin.getSkillsView().openCombatMenu(p)));
+        insertElement(10,new CombatButton(p, (e) -> PvPEventPlugin.getSkillsView().openCombatMenu(p)));
+
 
     }
 

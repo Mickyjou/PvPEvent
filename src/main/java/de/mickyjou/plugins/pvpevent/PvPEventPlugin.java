@@ -3,33 +3,44 @@ package de.mickyjou.plugins.pvpevent;
 import de.craften.plugins.bkcommandapi.SubCommandHandler;
 import de.craften.plugins.mcguilib.View;
 import de.craften.plugins.mcguilib.ViewManager;
-import de.mickyjou.plugins.pvpevent.commands.GenerateEventChunksCommand;
-import de.mickyjou.plugins.pvpevent.commands.SchematicCommands;
-import de.mickyjou.plugins.pvpevent.commands.SkillsCommand;
+import de.craften.plugins.playerdatastore.api.PlayerDataStore;
+import de.craften.plugins.playerdatastore.api.PlayerDataStoreService;
+import de.mickyjou.plugins.pvpevent.commands.*;
 import de.mickyjou.plugins.pvpevent.listener.PlayerInteractListener;
 import de.mickyjou.plugins.pvpevent.listener.PlayerMoveListener;
 import de.mickyjou.plugins.pvpevent.listener.PortalCreateListener;
 import de.mickyjou.plugins.pvpevent.shop.SkillsView;
+import de.mickyjou.plugins.pvpevent.utils.EventTeam;
 import de.mickyjou.plugins.pvpevent.utils.SchematicManager;
+import de.mickyjou.plugins.pvpevent.utils.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class PvPEventPlugin extends JavaPlugin {
 
     SchematicManager sm;
     public static String prefix = ChatColor.GOLD + "[PvPEvent] " + ChatColor.GRAY;
-    static ViewManager vm;
-    static SkillsView skw;
+    public static ArrayList<EventTeam> teams;
+    private static ViewManager vm;
+    private static SkillsView skw;
+    private static PlayerDataStoreService pds;
 
     @Override
     public void onEnable() {
         registerCommands();
         registerEvents();
+        registerServices();
+        Utils.loadAllTeams();
         sm = new SchematicManager(this);
         loadFiles();
         vm = new ViewManager(this);
@@ -74,6 +85,10 @@ public class PvPEventPlugin extends JavaPlugin {
 
         getCommand("generate").setExecutor(new GenerateEventChunksCommand());
 
+        getCommand("team").setExecutor(new TeamCommand());
+
+        getCommand("teams").setExecutor(new TeamsCommand());
+
     }
 
     /**
@@ -85,6 +100,15 @@ public class PvPEventPlugin extends JavaPlugin {
         pm.registerEvents(new PortalCreateListener(), this);
         pm.registerEvents(new PlayerMoveListener(), this);
         pm.registerEvents(new PlayerInteractListener(this), this);
+    }
+
+    public void registerServices() {
+        pds = Bukkit.getServer().getServicesManager()
+                .getRegistration(PlayerDataStoreService.class).getProvider();
+    }
+
+    public static PlayerDataStoreService getPDSService() {
+        return pds;
     }
 
     private void loadFiles() {
