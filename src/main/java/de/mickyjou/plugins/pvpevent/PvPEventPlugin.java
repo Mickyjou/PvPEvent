@@ -6,9 +6,7 @@ import de.craften.plugins.mcguilib.ViewManager;
 import de.craften.plugins.playerdatastore.api.PlayerDataStore;
 import de.craften.plugins.playerdatastore.api.PlayerDataStoreService;
 import de.mickyjou.plugins.pvpevent.commands.*;
-import de.mickyjou.plugins.pvpevent.listener.PlayerInteractListener;
-import de.mickyjou.plugins.pvpevent.listener.PlayerMoveListener;
-import de.mickyjou.plugins.pvpevent.listener.PortalCreateListener;
+import de.mickyjou.plugins.pvpevent.listener.*;
 import de.mickyjou.plugins.pvpevent.shop.SkillsView;
 import de.mickyjou.plugins.pvpevent.utils.EventTeam;
 import de.mickyjou.plugins.pvpevent.utils.SchematicManager;
@@ -100,6 +98,9 @@ public class PvPEventPlugin extends JavaPlugin {
         pm.registerEvents(new PortalCreateListener(), this);
         pm.registerEvents(new PlayerMoveListener(), this);
         pm.registerEvents(new PlayerInteractListener(this), this);
+        pm.registerEvents(new PlayerDeathListener(), this);
+        pm.registerEvents(new PlayerJoinListener(), this);
+        pm.registerEvents(new PlayerQuitListener(), this);
     }
 
     public void registerServices() {

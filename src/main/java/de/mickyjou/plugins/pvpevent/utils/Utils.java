@@ -164,7 +164,7 @@ public class Utils {
             String team = getTeam(uuid);
             for (EventTeam all : getAllTeams()) {
                 if (all.getName().equalsIgnoreCase(team)) {
-                    if (all.getPlayers()[0].getUniqueId() != uuid) {
+                    if (all.getPlayers()[0].getUniqueId() == uuid) {
                         toReturn = all.getPlayers()[1].getUniqueId();
                     } else {
                         toReturn = all.getPlayers()[0].getUniqueId();
@@ -200,6 +200,31 @@ public class Utils {
 
     public static String getTeam(UUID uuid) {
         return getPlayerStore(uuid).get("team");
+    }
+
+    public static boolean isAlive(UUID uuid) {
+        return getPlayerStore(uuid).get("alive") == "true" ? true : false;
+    }
+
+
+    public static int getKills(Player p) {
+        return getPlayerStore(p).get("kills") != null ? Integer.valueOf(getPlayerStore(p).get("kills")) : 0;
+    }
+
+    public static int getKills(UUID uuid) {
+        return getPlayerStore(uuid).get("kills") != null ? Integer.valueOf(getPlayerStore(uuid).get("kills")) : 0;
+    }
+
+    public static void addKill(Player p) {
+        getPlayerStore(p).put("kills", String.valueOf(getKills(p) + 1));
+    }
+
+    public static void banPlayer(Player p) {
+        getPlayerStore(p).put("banned", String.valueOf(true));
+    }
+
+    public static boolean isBanned(Player p) {
+        return getPlayerStore(p).get("banned") != null ? Boolean.valueOf(getPlayerStore(p).get("banned")) : false;
     }
 
 }

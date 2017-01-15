@@ -32,6 +32,13 @@ public class TeamCommand implements CommandExecutor {
                 OfflinePlayer mate = Bukkit.getOfflinePlayer(uuid);
                 p.sendMessage(PvPEventPlugin.prefix + "Dein Mitspieler ist§6 " +
                         mate.getName() + "§7.");
+                p.sendMessage(PvPEventPlugin.prefix + "Zusammen habt ihr §6" +
+                        (Utils.getKills(mate.getUniqueId()) + Utils.getKills(p))
+                        + " §7Kills." );
+                if(!Utils.isAlive(mate.getUniqueId())){
+                    p.sendMessage(PvPEventPlugin.prefix + "Dein Mitspieler ist bereits gestorben.");
+                }
+
 
             } else {
                 p.sendMessage(PvPEventPlugin.prefix + "Du befindest dich in keinem Team!");
@@ -47,7 +54,7 @@ public class TeamCommand implements CommandExecutor {
                     EventTeam team = new EventTeam(name, p1.getUniqueId().toString(), p2.getUniqueId().toString());
                     team.save();
                     p.sendMessage(PvPEventPlugin.prefix + "Du hast Erfolgreich das Team erstellt.");
-                }else{
+                } else {
                     p.sendMessage(PvPEventPlugin.prefix + "Du bist nicht OP!");
                 }
             } else {
