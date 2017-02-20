@@ -2,6 +2,7 @@ package de.mickyjou.plugins.pvpevent.commands;
 
 import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
 import de.mickyjou.plugins.pvpevent.utils.EventTeam;
+import de.mickyjou.plugins.pvpevent.utils.StatsGetter;
 import de.mickyjou.plugins.pvpevent.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -24,18 +25,21 @@ public class TeamCommand implements CommandExecutor {
         Player p = (Player) sender;
 
         if (args.length == 0) {
-            if (Utils.hasTeam(p)) {
+            StatsGetter stats = new StatsGetter(p);
+            if (stats.hasTeam()) {
 
-                String team = Utils.getTeam(p.getUniqueId());
+
+                String team = stats.getTeam();
                 p.sendMessage(PvPEventPlugin.prefix + "Du befindest dich im Team §6" + team + "§7.");
-                UUID uuid = Utils.getTeamMate(p.getUniqueId());
+                UUID uuid = stats.getTeamMate(p.getUniqueId());
                 OfflinePlayer mate = Bukkit.getOfflinePlayer(uuid);
+                StatsGetter stats2 = new StatsGetter(mate);
                 p.sendMessage(PvPEventPlugin.prefix + "Dein Mitspieler ist§6 " +
                         mate.getName() + "§7.");
                 p.sendMessage(PvPEventPlugin.prefix + "Zusammen habt ihr §6" +
-                        (Utils.getKills(mate.getUniqueId()) + Utils.getKills(p))
-                        + " §7Kills." );
-                if(!Utils.isAlive(mate.getUniqueId())){
+                        (stats2.getKills() + stats.getKills())
+                        + " §7Kills.");
+                if (!stats2.isAlive()) {
                     p.sendMessage(PvPEventPlugin.prefix + "Dein Mitspieler ist bereits gestorben.");
                 }
 
@@ -50,10 +54,21 @@ public class TeamCommand implements CommandExecutor {
                 if (p.isOp()) {
                     String name = args[1];
                     OfflinePlayer p1 = Bukkit.getOfflinePlayer(args[2]);
+                    StatsGetter stats1 = new StatsGetter(p1);
+                    StatsGetter stats2 = new StatsGetter(p1);
                     OfflinePlayer p2 = Bukkit.getOfflinePlayer(args[3]);
-                    EventTeam team = new EventTeam(name, p1.getUniqueId().toString(), p2.getUniqueId().toString());
-                    team.save();
-                    p.sendMessage(PvPEventPlugin.prefix + "Du hast Erfolgreich das Team erstellt.");
+                    if (stats1.getTeam() == null) {
+                        if (stats2.getTeam() == null) {
+                            EventTeam team = new EventTeam(name, p1.getUniqueId().toString(), p2.getUniqueId().toString());
+                            team.save();
+                            p.sendMessage(PvPEventPlugin.prefix + "Du hast Erfolgreich das Team erstellt.");
+                            Utils.loadAllTeams();
+                        } else {
+                            p.sendMessage(PvPEventPlugin.prefix + "Der Spieler §6" + p1.getName() + " §7ist bereits in einem Team.");
+                        }
+                    } else {
+                        p.sendMessage(PvPEventPlugin.prefix + "Der Spieler §6" + p2.getName() + " §7ist bereits in einem Team.");
+                    }
                 } else {
                     p.sendMessage(PvPEventPlugin.prefix + "Du bist nicht OP!");
                 }

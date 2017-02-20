@@ -32,8 +32,10 @@ public class EventTeam {
         this.cfg = YamlConfiguration.loadConfiguration(this.file);
         if (cfg.getConfigurationSection(name) == null) cfg.createSection(name);
         section = cfg.getConfigurationSection(name);
-        Utils.getPlayerStore(UUID.fromString(player1UUID)).put("team", name);
-        Utils.getPlayerStore(UUID.fromString(player2UUID)).put("team", name);
+        StatsGetter p1 = new StatsGetter(UUID.fromString(player1UUID));
+        StatsGetter p2 = new StatsGetter(UUID.fromString(player2UUID));
+        p1.setTeam(name);
+        p2.setTeam(name);
     }
 
     public OfflinePlayer[] getPlayers() {

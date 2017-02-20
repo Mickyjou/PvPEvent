@@ -1,6 +1,7 @@
 package de.mickyjou.plugins.pvpevent.listener;
 
 import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
+import de.mickyjou.plugins.pvpevent.utils.StatsGetter;
 import de.mickyjou.plugins.pvpevent.utils.Utils;
 import de.mickyjou.plugins.pvpevent.utils.WorldBorder;
 import org.bukkit.Bukkit;
@@ -21,23 +22,24 @@ public class PlayerDeathListener implements Listener {
     public void onPlayerDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
         Player killer = p.getKiller();
+        StatsGetter stats = new StatsGetter(p);
 
         if (killer == null) {
             e.setDeathMessage(ChatColor.GRAY + "Der Spieler §6" + p.getName() + " §7ist gestorben.");
         } else {
             e.setDeathMessage(ChatColor.GRAY + "Der Spieler §6" + p.getName() + " §7wurde von §6" + killer.getName()
                     + " §7getötet.");
-            Utils.addKill(killer);
+            stats.addKill();
         }
         p.kickPlayer(PvPEventPlugin.prefix + "Du bist gestorben und somit aus dem Projekt ausgeschlossen");
-        Utils.banPlayer(p);
+        stats.banPlayer();
         double worldbordersize = WorldBorder.getWorldBorderSize(p.getWorld());
-        for(World all: Bukkit.getWorlds()){
+        for (World all : Bukkit.getWorlds()) {
             WorldBorder.setWorldBoarderSize(all, worldbordersize - 50);
         }
 
-    }
 
+    }
 
 
 }

@@ -1,28 +1,29 @@
 package de.mickyjou.plugins.pvpevent;
 
 import de.craften.plugins.bkcommandapi.SubCommandHandler;
-import de.craften.plugins.mcguilib.View;
 import de.craften.plugins.mcguilib.ViewManager;
-import de.craften.plugins.playerdatastore.api.PlayerDataStore;
 import de.craften.plugins.playerdatastore.api.PlayerDataStoreService;
 import de.mickyjou.plugins.pvpevent.commands.*;
 import de.mickyjou.plugins.pvpevent.listener.*;
-import de.mickyjou.plugins.pvpevent.shop.SkillsView;
+import de.mickyjou.plugins.pvpevent.utils.Countdown;
 import de.mickyjou.plugins.pvpevent.utils.EventTeam;
 import de.mickyjou.plugins.pvpevent.utils.SchematicManager;
 import de.mickyjou.plugins.pvpevent.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class PvPEventPlugin extends JavaPlugin {
 
@@ -30,8 +31,8 @@ public class PvPEventPlugin extends JavaPlugin {
     public static String prefix = ChatColor.GOLD + "[PvPEvent] " + ChatColor.GRAY;
     public static ArrayList<EventTeam> teams;
     private static ViewManager vm;
-    private static SkillsView skw;
     private static PlayerDataStoreService pds;
+
 
     @Override
     public void onEnable() {
@@ -42,13 +43,32 @@ public class PvPEventPlugin extends JavaPlugin {
         sm = new SchematicManager(this);
         loadFiles();
         vm = new ViewManager(this);
-        skw = new SkillsView(vm);
+        startTimer();
         super.onEnable();
 
     }
 
+    private void startTimer() {
+        BukkitTask bukkitTask = Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
+            @Override
+            public void run() {
+
+                Date date = new Date();
+                String[] days = {"SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"};
+                String currentDay = days[date.getDay()];
+                if(currentDay == days[1]){
+
+                }
+
+            }
+        }, 0, 60 * (60 * 20));
+    }
+
     @Override
     public void onDisable() {
+        for (Player all : Bukkit.getOnlinePlayers()) {
+            Countdown.stopCountdown(all);
+        }
 
         super.onDisable();
     }
@@ -81,7 +101,6 @@ public class PvPEventPlugin extends JavaPlugin {
         skillsCommandHandler.addHandlers(new SkillsCommand(this));
         getCommand("skills").setExecutor(skillsCommandHandler);
 
-        getCommand("generate").setExecutor(new GenerateEventChunksCommand());
 
         getCommand("team").setExecutor(new TeamCommand());
 
@@ -123,8 +142,5 @@ public class PvPEventPlugin extends JavaPlugin {
         return vm;
     }
 
-    public static SkillsView getSkillsView() {
-        return skw;
-    }
 
 }

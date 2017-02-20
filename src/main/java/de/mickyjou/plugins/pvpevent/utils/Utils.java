@@ -84,7 +84,6 @@ public class Utils {
 
     public static void createNewWorld(String name) {
         WorldCreator wc = new WorldCreator(name);
-        ChunkGenerator cg = new EventChunkGenerator();
         wc.type(WorldType.NORMAL);
         wc.generateStructures(true);
         wc.createWorld();
@@ -122,24 +121,6 @@ public class Utils {
         return null;
     }
 
-    /**
-     * Generate EventChunks with the size of 4x4 Chunks
-     *
-     * @param chunkRadius
-     * @param world
-     */
-
-    public static void generateEventChunks(int chunkRadius, World world) {
-        for (int x = -(chunkRadius); x <= chunkRadius; x += 2) {
-            for (int z = -(chunkRadius); z <= chunkRadius; z += 2) {
-                Chunk[] chunk = {world.getChunkAt(x, z), world.getChunkAt(x + 1, z), world.getChunkAt(x, z + 1), world.getChunkAt(x + 1, z + 1)};
-                EventChunk eventchunk = new EventChunk(chunk);
-                eventchunk.save();
-
-            }
-        }
-    }
-
     public static void loadAllTeams() {
         File teamsfile = new File(FileManager.getDataFolder(), "Teams.yml");
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(teamsfile);
@@ -158,73 +139,5 @@ public class Utils {
     }
 
 
-    public static UUID getTeamMate(UUID uuid) {
-        UUID toReturn = null;
-        if (hasTeam(uuid)) {
-            String team = getTeam(uuid);
-            for (EventTeam all : getAllTeams()) {
-                if (all.getName().equalsIgnoreCase(team)) {
-                    if (all.getPlayers()[0].getUniqueId() == uuid) {
-                        toReturn = all.getPlayers()[1].getUniqueId();
-                    } else {
-                        toReturn = all.getPlayers()[0].getUniqueId();
-                    }
-                }
-            }
-
-        }
-        return toReturn;
-    }
-
-    public static PlayerDataStore getPlayerStore(UUID uuid) {
-        return PvPEventPlugin.getPlugin(PvPEventPlugin.class).getPDSService().getStore(uuid);
-    }
-
-    public static PlayerDataStore getPlayerStore(Player player) {
-        return PvPEventPlugin.getPlugin(PvPEventPlugin.class).getPDSService().getStore(player.getUniqueId());
-    }
-
-    public static PlayerDataStore getPlayerStore(OfflinePlayer player) {
-        return PvPEventPlugin.getPlugin(PvPEventPlugin.class).getPDSService().getStore(player.getUniqueId());
-    }
-
-    public static boolean hasTeam(UUID uuid) {
-        if (getPlayerStore(uuid).get("team") != null) return true;
-        return false;
-    }
-
-    public static boolean hasTeam(Player p) {
-        if (getPlayerStore(p).get("team") != null) return true;
-        return false;
-    }
-
-    public static String getTeam(UUID uuid) {
-        return getPlayerStore(uuid).get("team");
-    }
-
-    public static boolean isAlive(UUID uuid) {
-        return getPlayerStore(uuid).get("alive") == "true" ? true : false;
-    }
-
-
-    public static int getKills(Player p) {
-        return getPlayerStore(p).get("kills") != null ? Integer.valueOf(getPlayerStore(p).get("kills")) : 0;
-    }
-
-    public static int getKills(UUID uuid) {
-        return getPlayerStore(uuid).get("kills") != null ? Integer.valueOf(getPlayerStore(uuid).get("kills")) : 0;
-    }
-
-    public static void addKill(Player p) {
-        getPlayerStore(p).put("kills", String.valueOf(getKills(p) + 1));
-    }
-
-    public static void banPlayer(Player p) {
-        getPlayerStore(p).put("banned", String.valueOf(true));
-    }
-
-    public static boolean isBanned(Player p) {
-        return getPlayerStore(p).get("banned") != null ? Boolean.valueOf(getPlayerStore(p).get("banned")) : false;
-    }
 
 }

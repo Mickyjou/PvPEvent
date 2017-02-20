@@ -1,4 +1,4 @@
-package de.mickyjou.plugins.pvpevent.shop.buttons;
+package de.mickyjou.plugins.pvpevent.shop;
 
 import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
 import org.bukkit.Material;
