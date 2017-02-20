@@ -7,7 +7,6 @@ import de.mickyjou.plugins.pvpevent.commands.*;
 import de.mickyjou.plugins.pvpevent.listener.*;
 import de.mickyjou.plugins.pvpevent.utils.Countdown;
 import de.mickyjou.plugins.pvpevent.utils.EventTeam;
-import de.mickyjou.plugins.pvpevent.utils.SchematicManager;
 import de.mickyjou.plugins.pvpevent.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,15 +18,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class PvPEventPlugin extends JavaPlugin {
 
-    SchematicManager sm;
     public static String prefix = ChatColor.GOLD + "[PvPEvent] " + ChatColor.GRAY;
     public static ArrayList<EventTeam> teams;
     private static ViewManager vm;
@@ -40,7 +35,6 @@ public class PvPEventPlugin extends JavaPlugin {
         registerEvents();
         registerServices();
         Utils.loadAllTeams();
-        sm = new SchematicManager(this);
         loadFiles();
         vm = new ViewManager(this);
         startTimer();
@@ -96,7 +90,6 @@ public class PvPEventPlugin extends JavaPlugin {
         };
 
 
-        getCommand("schematic").setExecutor(new SchematicCommands(this));
 
         skillsCommandHandler.addHandlers(new SkillsCommand(this));
         getCommand("skills").setExecutor(skillsCommandHandler);
@@ -116,7 +109,6 @@ public class PvPEventPlugin extends JavaPlugin {
         PluginManager pm = this.getServer().getPluginManager();
         pm.registerEvents(new PortalCreateListener(), this);
         pm.registerEvents(new PlayerMoveListener(), this);
-        pm.registerEvents(new PlayerInteractListener(this), this);
         pm.registerEvents(new PlayerDeathListener(), this);
         pm.registerEvents(new PlayerJoinListener(), this);
         pm.registerEvents(new PlayerQuitListener(), this);
