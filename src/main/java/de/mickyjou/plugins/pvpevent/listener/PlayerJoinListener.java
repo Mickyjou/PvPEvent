@@ -27,8 +27,9 @@ public class PlayerJoinListener implements Listener {
             return;
         } else if (hours >= 18 || hours <= 14) {
 
-                    e.disallow(PlayerLoginEvent.Result.KICK_BANNED, PvPEventPlugin.prefix
-                            + "Du kannst nur zwischen 14 und 18 Uhr spielen.");
+                    //e.disallow(PlayerLoginEvent.Result.KICK_BANNED, PvPEventPlugin.prefix
+                          //  + "Du kannst nur zwischen 14 und 18 Uhr spielen.");
+            p.sendMessage("Normalerweise könntest du nicht joinen!");
 
         } else {
             Countdown.startCouuntdown(p);

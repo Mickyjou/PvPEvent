@@ -14,5 +14,7 @@ commands:
           description: shows your team and create new teams
      teams:
           description: shows all teams
+     warnings:
+          description: Shows your warnings
 
      

@@ -94,7 +94,7 @@ public class PvPEventPlugin extends JavaPlugin {
         skillsCommandHandler.addHandlers(new SkillsCommand(this));
         getCommand("skills").setExecutor(skillsCommandHandler);
 
-
+        getCommand("warnings").setExecutor(new WarningCommand());
         getCommand("team").setExecutor(new TeamCommand());
 
         getCommand("teams").setExecutor(new TeamsCommand());
@@ -112,6 +112,7 @@ public class PvPEventPlugin extends JavaPlugin {
         pm.registerEvents(new PlayerDeathListener(), this);
         pm.registerEvents(new PlayerJoinListener(), this);
         pm.registerEvents(new PlayerQuitListener(), this);
+        pm.registerEvents(new PlayerChatListener(), this);
     }
 
     public void registerServices() {
