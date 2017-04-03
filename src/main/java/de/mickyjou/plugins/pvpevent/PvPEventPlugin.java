@@ -3,7 +3,10 @@ package de.mickyjou.plugins.pvpevent;
 import de.craften.plugins.bkcommandapi.SubCommandHandler;
 import de.craften.plugins.mcguilib.ViewManager;
 import de.craften.plugins.playerdatastore.api.PlayerDataStoreService;
-import de.mickyjou.plugins.pvpevent.commands.*;
+import de.mickyjou.plugins.pvpevent.commands.SkillsCommand;
+import de.mickyjou.plugins.pvpevent.commands.TeamCommand;
+import de.mickyjou.plugins.pvpevent.commands.TeamsCommand;
+import de.mickyjou.plugins.pvpevent.commands.WarningCommand;
 import de.mickyjou.plugins.pvpevent.listener.*;
 import de.mickyjou.plugins.pvpevent.utils.Countdown;
 import de.mickyjou.plugins.pvpevent.utils.EventTeam;
@@ -17,7 +20,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -31,6 +34,7 @@ public class PvPEventPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
         registerCommands();
         registerEvents();
         registerServices();
@@ -50,7 +54,7 @@ public class PvPEventPlugin extends JavaPlugin {
                 Date date = new Date();
                 String[] days = {"SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"};
                 String currentDay = days[date.getDay()];
-                if(currentDay == days[1]){
+                if (currentDay == days[1]) {
 
                 }
 
@@ -88,7 +92,6 @@ public class PvPEventPlugin extends JavaPlugin {
                 commandSender.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
             }
         };
-
 
 
         skillsCommandHandler.addHandlers(new SkillsCommand(this));

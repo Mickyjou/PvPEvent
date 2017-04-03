@@ -39,33 +39,43 @@ public class Countdown {
                     case 60:
                         Bukkit.broadcastMessage(PvPEventPlugin.prefix + "Der Spieler §6" +
                                 p.getName() + " §7wird in " + time + " Sekunden gekickt.");
+                        break;
                     case 30:
                         Bukkit.broadcastMessage(PvPEventPlugin.prefix + "Der Spieler §6" +
                                 p.getName() + " §7wird in " + time + " Sekunden gekickt.");
+                        break;
                     case 15:
                         Bukkit.broadcastMessage(PvPEventPlugin.prefix + "Der Spieler §6" +
                                 p.getName() + " §7wird in " + time + " Sekunden gekickt.");
+                        break;
                     case 10:
                         Bukkit.broadcastMessage(PvPEventPlugin.prefix + "Der Spieler §6" +
                                 p.getName() + " §7wird in " + time + " Sekunden gekickt.");
+                        break;
                     case 5:
                         Bukkit.broadcastMessage(PvPEventPlugin.prefix + "Der Spieler §6" +
                                 p.getName() + " §7wird in " + time + " Sekunden gekickt.");
+                        break;
                     case 4:
                         Bukkit.broadcastMessage(PvPEventPlugin.prefix + "Der Spieler §6" +
                                 p.getName() + " §7wird in " + time + " Sekunden gekickt.");
+                        break;
                     case 3:
                         Bukkit.broadcastMessage(PvPEventPlugin.prefix + "Der Spieler §6" +
                                 p.getName() + " §7wird in " + time + " Sekunden gekickt.");
+                        break;
                     case 2:
                         Bukkit.broadcastMessage(PvPEventPlugin.prefix + "Der Spieler §6" +
                                 p.getName() + " §7wird in " + time + " Sekunden gekickt.");
+                        break;
                     case 1:
                         Bukkit.broadcastMessage(PvPEventPlugin.prefix + "Der Spieler §6" +
                                 p.getName() + " §7wird in " + time + " Sekunden gekickt.");
+                        break;
                     case 0:
                         p.kickPlayer(PvPEventPlugin.prefix + "Deine Spielzeit ist vorbei!");
                         Bukkit.broadcastMessage(PvPEventPlugin.prefix + "Der Spieler §6" + p.getName() + " §7wurde gekickt.");
+                        break;
                 }
 
 
