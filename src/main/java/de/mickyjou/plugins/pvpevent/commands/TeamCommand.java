@@ -31,7 +31,7 @@ public class TeamCommand implements CommandExecutor {
 
                 String team = stats.getTeam();
                 p.sendMessage(PvPEventPlugin.prefix + "Du befindest dich im Team §6" + team + "§7.");
-                UUID uuid = stats.getTeamMate(p.getUniqueId());
+                UUID uuid = stats.getTeamMate();
                 OfflinePlayer mate = Bukkit.getOfflinePlayer(uuid);
                 StatsGetter stats2 = new StatsGetter(mate);
                 p.sendMessage(PvPEventPlugin.prefix + "Dein Mitspieler ist§6 " +

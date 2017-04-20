@@ -36,11 +36,10 @@ public class PvPEventPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        //resetAllStores();
-
         registerCommands();
         registerEvents();
         registerServices();
+       // resetAllStores();
         Utils.loadAllTeams();
         loadFiles();
         vm = new ViewManager(this);

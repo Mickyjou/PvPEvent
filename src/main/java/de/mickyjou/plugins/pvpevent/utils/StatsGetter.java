@@ -2,6 +2,8 @@ package de.mickyjou.plugins.pvpevent.utils;
 
 import de.craften.plugins.playerdatastore.api.PlayerDataStore;
 import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
+import de.mickyjou.plugins.pvpevent.events.PlayerWarningsChangeEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -47,11 +49,12 @@ public class StatsGetter {
     }
 
 
-    public void setTeamMate(UUID uuid){
+    public void setTeamMate(UUID uuid) {
         getPlayerStore().put("teammate", String.valueOf(uuid));
     }
-    public UUID getTeamMate(UUID uuid) {
-        return UUID.fromString(getPlayerStore().get("teammate"));
+
+    public UUID getTeamMate() {
+        return UUID.fromString(getPlayerStore().get("teammate")) != null ? UUID.fromString(getPlayerStore().get("teammate")) : null;
     }
 
 
@@ -77,8 +80,18 @@ public class StatsGetter {
     }
 
     public void addWarning() {
+        Bukkit.getPluginManager().callEvent(new PlayerWarningsChangeEvent(Bukkit.getOfflinePlayer(uuid), getWarnings(), getWarnings() + 1));
         getPlayerStore().put("warnings", String.valueOf(getWarnings() + 1));
     }
+
+    public void removeWarning() {
+        if (getWarnings() >= 1) {
+            Bukkit.getPluginManager().callEvent(new PlayerWarningsChangeEvent(Bukkit.getOfflinePlayer(uuid), getWarnings(), getWarnings() - 1));
+            getPlayerStore().put("warnings", String.valueOf(getWarnings() - 1));
+        }
+    }
+
+    ;
 
     public int getWarnings() {
         return getPlayerStore().get("warnings") == null ? 0 : Integer.valueOf(getPlayerStore().get("warnings"));

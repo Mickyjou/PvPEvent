@@ -26,21 +26,33 @@ public class WarningCommand implements CommandExecutor {
 
             //warnings add Player
         } else if (args.length == 2) {
-            String name = args[2];
-            if (args[1] == "add") {
+            if (args[0].equalsIgnoreCase("add")) {
 
+                String name = args[1];
                 OfflinePlayer p = Bukkit.getOfflinePlayer(name);
                 if (p != null) {
                     StatsGetter stats = new StatsGetter(p);
                     stats.addWarning();
                     sender.sendMessage(PvPEventPlugin.prefix + "Du hast den Spieler §6" + p.getName() + " §7erfolgreich gewarnt");
-                }else{
+                } else {
                     sender.sendMessage(PvPEventPlugin.prefix + "Der Spieler existiert nicht!");
                 }
-            }else{
+            } else if (args[0].equalsIgnoreCase("remove")) {
+
+                String name = args[1];
+                OfflinePlayer p = Bukkit.getOfflinePlayer(name);
+                if (p != null) {
+                    StatsGetter stats = new StatsGetter(p);
+                    stats.removeWarning();
+                    sender.sendMessage(PvPEventPlugin.prefix + "Du hast den Spieler §6" + p.getName() + " §7erfolgreich eine Warnung entfernt.");
+                } else {
+                    sender.sendMessage(PvPEventPlugin.prefix + "Der Spieler existiert nicht!");
+                }
+
+            } else {
                 sender.sendMessage(PvPEventPlugin.prefix + "/warnings add [playername]");
             }
-        } else{
+        } else {
             sender.sendMessage(PvPEventPlugin.prefix + "/warnings");
             sender.sendMessage(PvPEventPlugin.prefix + "/warnings add [Playername]");
         }
