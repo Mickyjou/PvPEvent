@@ -1,12 +1,10 @@
 package de.mickyjou.plugins.pvpevent.utils;
 
-import com.google.common.base.Charsets;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,10 +30,6 @@ public class EventTeam {
         this.cfg = YamlConfiguration.loadConfiguration(this.file);
         if (cfg.getConfigurationSection(name) == null) cfg.createSection(name);
         section = cfg.getConfigurationSection(name);
-        StatsGetter p1 = new StatsGetter(UUID.fromString(player1UUID));
-        StatsGetter p2 = new StatsGetter(UUID.fromString(player2UUID));
-        p1.setTeam(name);
-        p2.setTeam(name);
     }
 
     public OfflinePlayer[] getPlayers() {
@@ -49,6 +43,14 @@ public class EventTeam {
     }
 
     public void save() {
+
+        StatsGetter p1 = new StatsGetter(UUID.fromString(this.p1));
+        StatsGetter p2 = new StatsGetter(UUID.fromString(this.p2));
+        p1.setTeam(name);
+        p2.setTeam(name);
+        p1.setTeamMate(UUID.fromString(this.p2));
+        p2.setTeamMate(UUID.fromString(this.p1));
+
         section.set("player1", p1);
         section.set("player2", p2);
 

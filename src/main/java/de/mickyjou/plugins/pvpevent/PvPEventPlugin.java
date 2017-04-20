@@ -10,9 +10,11 @@ import de.mickyjou.plugins.pvpevent.commands.WarningCommand;
 import de.mickyjou.plugins.pvpevent.listener.*;
 import de.mickyjou.plugins.pvpevent.utils.Countdown;
 import de.mickyjou.plugins.pvpevent.utils.EventTeam;
+import de.mickyjou.plugins.pvpevent.utils.StatsGetter;
 import de.mickyjou.plugins.pvpevent.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -20,7 +22,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.io.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -34,6 +36,7 @@ public class PvPEventPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        //resetAllStores();
 
         registerCommands();
         registerEvents();
@@ -43,7 +46,6 @@ public class PvPEventPlugin extends JavaPlugin {
         vm = new ViewManager(this);
         startTimer();
         super.onEnable();
-
     }
 
     private void startTimer() {
@@ -136,6 +138,13 @@ public class PvPEventPlugin extends JavaPlugin {
 
     public static ViewManager getViewManager() {
         return vm;
+    }
+
+    public void resetAllStores() {
+        for (OfflinePlayer all: Bukkit.getOfflinePlayers()){
+            StatsGetter stats = new StatsGetter(all);
+            stats.getPlayerStore().clear();
+        }
     }
 
 

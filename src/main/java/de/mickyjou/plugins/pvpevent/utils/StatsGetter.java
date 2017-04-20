@@ -47,22 +47,11 @@ public class StatsGetter {
     }
 
 
+    public void setTeamMate(UUID uuid){
+        getPlayerStore().put("teammate", String.valueOf(uuid));
+    }
     public UUID getTeamMate(UUID uuid) {
-        UUID toReturn = null;
-        if (hasTeam()) {
-            String team = getTeam();
-            for (EventTeam all : Utils.getAllTeams()) {
-                if (all.getName().equalsIgnoreCase(team)) {
-                    if (all.getPlayers()[0].getUniqueId() == uuid) {
-                        toReturn = all.getPlayers()[1].getUniqueId();
-                    } else {
-                        toReturn = all.getPlayers()[0].getUniqueId();
-                    }
-                }
-            }
-
-        }
-        return toReturn;
+        return UUID.fromString(getPlayerStore().get("teammate"));
     }
 
 
