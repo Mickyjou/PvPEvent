@@ -6,8 +6,6 @@ depend: [PlayerDataStore]
 commands:
      schematic:
           description: Main command for the Schematic Manager
-     skills:
-          description: Opens the Skills-Menu
      generate:
           description: Generates EventChunks with the size of 4x4 Chunks
      team:
@@ -16,5 +14,7 @@ commands:
           description: shows all teams
      warnings:
           description: Shows your warnings
+     setspawn:
+          description: Sets the Lobby-Spawn
 
      
