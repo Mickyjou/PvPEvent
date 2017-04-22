@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 public class PlayerItemConsumeListener implements Listener {
     public ItemStack[] forbiddenItems = {new ItemStack(Material.getMaterial(322),1,(byte)1)};
 
+
     @EventHandler
     public void onPlayerItemConsume(PlayerItemConsumeEvent e) {
         for (ItemStack all : forbiddenItems) {

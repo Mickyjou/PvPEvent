@@ -12,16 +12,17 @@ import org.bukkit.entity.Player;
 public class WarningCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+        if(!(sender instanceof  Player)){
+            sender.sendMessage(PvPEventPlugin.prefix + "You have to be a Player to execute this command.");
+            return true;
+        }
         if (args.length == 0) {
-            if (sender instanceof Player) {
                 //show warnings
                 Player p = (Player) sender;
                 StatsGetter stats = new StatsGetter(p);
                 p.sendMessage(PvPEventPlugin.prefix + "Du hast bereits §6" + stats.getWarnings() + " §7Verwarnungen");
 
-            } else {
-                sender.sendMessage(PvPEventPlugin.prefix + "Du musst ein Spieler sein.");
-            }
 
 
             //warnings add Player

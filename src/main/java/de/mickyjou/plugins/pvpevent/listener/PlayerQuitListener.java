@@ -14,7 +14,7 @@ public class PlayerQuitListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
         e.setQuitMessage(PvPEventPlugin.prefix + "Der Spieler §6"
-                + e.getPlayer().getName() + " &7hat das Spiel verlassen");
+                + e.getPlayer().getName() + " §7hat das Spiel verlassen");
         Countdown.stopCountdown(e.getPlayer());
     }
 }

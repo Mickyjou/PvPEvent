@@ -54,7 +54,7 @@ public class StatsGetter {
     }
 
     public UUID getTeamMate() {
-        return UUID.fromString(getPlayerStore().get("teammate")) != null ? UUID.fromString(getPlayerStore().get("teammate")) : null;
+        return UUID.fromString(getPlayerStore().get("teammate"));
     }
 
 

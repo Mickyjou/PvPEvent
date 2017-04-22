@@ -1,17 +1,16 @@
 package de.mickyjou.plugins.pvpevent;
 
 import de.craften.plugins.playerdatastore.api.PlayerDataStoreService;
-import de.mickyjou.plugins.pvpevent.commands.SpawnCommand;
-import de.mickyjou.plugins.pvpevent.commands.TeamCommand;
-import de.mickyjou.plugins.pvpevent.commands.TeamsCommand;
-import de.mickyjou.plugins.pvpevent.commands.WarningCommand;
+import de.mickyjou.plugins.pvpevent.commands.*;
 import de.mickyjou.plugins.pvpevent.listener.*;
 import de.mickyjou.plugins.pvpevent.utils.Countdown;
 import de.mickyjou.plugins.pvpevent.utils.EventTeam;
+import de.mickyjou.plugins.pvpevent.utils.StatsGetter;
 import de.mickyjou.plugins.pvpevent.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -37,15 +36,16 @@ public class PvPEventPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
         loadFiles();
-        registerEvents();
-        registerServices();
-        // resetAllStores();
         Utils.loadAllTeams();
-        startTimer();
+        registerServices();
         registerCommands();
+        registerEvents();
+      //  resetAllStores();
+        startTimer();
         registerRecipes();
+
+
         super.onEnable();
     }
 
@@ -89,6 +89,7 @@ public class PvPEventPlugin extends JavaPlugin {
         getCommand("team").setExecutor(new TeamCommand());
         getCommand("teams").setExecutor(new TeamsCommand());
         getCommand("setspawn").setExecutor(new SpawnCommand());
+        getCommand("sethologramm").setExecutor(new HologrammCommand());
 
     }
 
@@ -106,6 +107,7 @@ public class PvPEventPlugin extends JavaPlugin {
         pm.registerEvents(new PlayerChatListener(), this);
         pm.registerEvents(new PlayerItemConsumeListener(), this);
         pm.registerEvents(new PlayerInteractListener(), this);
+        pm.registerEvents(new BlockBreakListener(), this);
     }
 
     public void registerServices() {
@@ -149,7 +151,7 @@ public class PvPEventPlugin extends JavaPlugin {
         lavaAndWaterToObsidian.setIngredient('L', Material.LAVA_BUCKET);
 
         ShapedRecipe blazeToEXPBottle = new ShapedRecipe(new ItemStack(Material.EXP_BOTTLE));
-        blazeToEXPBottle.shape("AAA","ABB","AAA");
+        blazeToEXPBottle.shape("AAA", "ABB", "AAA");
         blazeToEXPBottle.setIngredient('B', Material.BLAZE_POWDER);
 
 
@@ -159,5 +161,10 @@ public class PvPEventPlugin extends JavaPlugin {
         Bukkit.addRecipe(blazeToEXPBottle);
     }
 
-
+    public void resetAllStores() {
+        for (OfflinePlayer all : Bukkit.getOfflinePlayers()) {
+            StatsGetter stats = new StatsGetter(all);
+            stats.getPlayerStore().clear();
+        }
+    }
 }

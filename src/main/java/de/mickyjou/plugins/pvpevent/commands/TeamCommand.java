@@ -23,6 +23,10 @@ public class TeamCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) return true;
         Player p = (Player) sender;
+        if(!p.isOp()){
+            p.sendMessage(PvPEventPlugin.prefix + "You do not have enough Permissions to execute this command");
+            return true;
+        }
 
         if (args.length == 0) {
             StatsGetter stats = new StatsGetter(p);

@@ -2,8 +2,10 @@ package de.mickyjou.plugins.pvpevent.listener;
 
 import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
 import de.mickyjou.plugins.pvpevent.utils.Countdown;
+import de.mickyjou.plugins.pvpevent.utils.Hologram;
 import de.mickyjou.plugins.pvpevent.utils.StatsGetter;
 import de.mickyjou.plugins.pvpevent.utils.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,10 +22,12 @@ public class PlayerJoinListener implements Listener {
 
     private final PvPEventPlugin plugin;
     private Location lobbyLocation;
+    private Location skullLocation;
 
     public PlayerJoinListener(PvPEventPlugin plugin) {
         this.plugin = plugin;
         lobbyLocation = Utils.getLocation("lobby");
+        skullLocation = Utils.getLocation("skull");
     }
 
     @EventHandler
@@ -51,11 +55,21 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
+
         if (lobbyLocation != null) {
             p.teleport(lobbyLocation);
-        } else {
-            p.sendMessage("null amk");
         }
+
+        if (skullLocation != null) {
+
+            StatsGetter stats = new StatsGetter(p);
+            String[] text = {"§6§nStats von §7§n" + p.getName() + "§6:", " " ,  "§6Team: §7" + stats.getTeam(), "§6Team-Mate: §7" + Bukkit.getOfflinePlayer(stats.getTeamMate()).getName(),
+                    "§6Kills: §7" + stats.getKills(), "§6Verwarnungen: §7" + stats.getWarnings()
+            };
+            Hologram hologram = new Hologram(text, skullLocation);
+            hologram.showPlayer(p);
+        }
+
 
     }
 

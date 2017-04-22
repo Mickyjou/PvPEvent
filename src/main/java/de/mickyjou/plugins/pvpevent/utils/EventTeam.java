@@ -51,8 +51,8 @@ public class EventTeam {
         p1.setTeamMate(UUID.fromString(this.p2));
         p2.setTeamMate(UUID.fromString(this.p1));
 
-        section.set("player1", p1);
-        section.set("player2", p2);
+        section.set("player1", this.p1);
+        section.set("player2", this.p2);
 
         try {
             cfg.save(file);

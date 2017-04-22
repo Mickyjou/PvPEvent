@@ -52,15 +52,13 @@ public class Utils {
     public static void saveLocation(Location location, String name) {
         name = name + ".";
 
-        ConfigurationSection section = PvPEventPlugin.cfg.getConfigurationSection("locations." + name) != null ?
-                PvPEventPlugin.cfg.getConfigurationSection("locations." + name) : PvPEventPlugin.cfg.createSection("locations." + name);
 
-        section.set("world", location.getWorld().getName());
-        section.set("x", location.getX());
-        section.set("y", location.getY());
-        section.set("z", location.getZ());
-        section.set("yaw", location.getYaw());
-        section.set("pitch", location.getPitch());
+        PvPEventPlugin.cfg.set(name + "world", location.getWorld().getName());
+        PvPEventPlugin.cfg.set(name + "x", location.getX());
+        PvPEventPlugin.cfg.set(name + "y", location.getY());
+        PvPEventPlugin.cfg.set(name + "z", location.getZ());
+        PvPEventPlugin.cfg.set(name + "yaw", location.getYaw());
+        PvPEventPlugin.cfg.set(name + "pitch", location.getPitch());
 
         try {
             PvPEventPlugin.cfg.save(PvPEventPlugin.configFile);
@@ -72,13 +70,14 @@ public class Utils {
     }
 
     public static Location getLocation(String name) {
-        ConfigurationSection section = PvPEventPlugin.cfg.getConfigurationSection("locations." + name);
-        String world = section.getString("world");
-        Double x = section.getDouble("x");
-        Double y = section.getDouble("y");
-        Double z = section.getDouble("z");
-        float yaw = (float) section.getDouble("yaw");
-        float pitch = (float) section.getDouble("pitch");
+        name = name + ".";
+
+        String world = PvPEventPlugin.cfg.getString(name + "world");
+        Double x = PvPEventPlugin.cfg.getDouble(name + "x");
+        Double y = PvPEventPlugin.cfg.getDouble(name + "y");
+        Double z = PvPEventPlugin.cfg.getDouble(name + "z");
+        float yaw = (float) PvPEventPlugin.cfg.getDouble(name + "yaw");
+        float pitch = (float) PvPEventPlugin.cfg.getDouble(name + "pitch");
 
         return new Location(Bukkit.getWorld(world), x, y, z, yaw, pitch);
     }
