@@ -1,6 +1,5 @@
 package de.mickyjou.plugins.pvpevent;
 
-import de.craften.plugins.mcguilib.ViewManager;
 import de.craften.plugins.playerdatastore.api.PlayerDataStoreService;
 import de.mickyjou.plugins.pvpevent.commands.SpawnCommand;
 import de.mickyjou.plugins.pvpevent.commands.TeamCommand;
@@ -9,14 +8,15 @@ import de.mickyjou.plugins.pvpevent.commands.WarningCommand;
 import de.mickyjou.plugins.pvpevent.listener.*;
 import de.mickyjou.plugins.pvpevent.utils.Countdown;
 import de.mickyjou.plugins.pvpevent.utils.EventTeam;
-import de.mickyjou.plugins.pvpevent.utils.StatsGetter;
 import de.mickyjou.plugins.pvpevent.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -30,7 +30,6 @@ public class PvPEventPlugin extends JavaPlugin {
 
     public static String prefix = ChatColor.GOLD + "[PvPEvent] " + ChatColor.GRAY;
     public static ArrayList<EventTeam> teams;
-    private static ViewManager vm;
     private static PlayerDataStoreService pds;
     public static File configFile;
     public static FileConfiguration cfg;
@@ -44,9 +43,9 @@ public class PvPEventPlugin extends JavaPlugin {
         registerServices();
         // resetAllStores();
         Utils.loadAllTeams();
-        vm = new ViewManager(this);
         startTimer();
         registerCommands();
+        registerRecipes();
         super.onEnable();
     }
 
@@ -84,7 +83,6 @@ public class PvPEventPlugin extends JavaPlugin {
      * Register all de.mickyjou.plugins.pvpevent.commands
      */
     public void registerCommands() {
-
 
 
         getCommand("warnings").setExecutor(new WarningCommand());
@@ -133,15 +131,30 @@ public class PvPEventPlugin extends JavaPlugin {
 
     }
 
-    public static ViewManager getViewManager() {
-        return vm;
-    }
 
-    public void resetAllStores() {
-        for (OfflinePlayer all : Bukkit.getOfflinePlayers()) {
-            StatsGetter stats = new StatsGetter(all);
-            stats.getPlayerStore().clear();
-        }
+    public void registerRecipes() {
+        ShapedRecipe flowersToIron = new ShapedRecipe(new ItemStack(Material.IRON_INGOT));
+        flowersToIron.shape("FFF", "FFF", "FFF");
+        flowersToIron.setIngredient('F', Material.RED_ROSE);
+
+        ShapedRecipe slimesToGold = new ShapedRecipe(new ItemStack(Material.GOLD_INGOT));
+        slimesToGold.shape("AAA", "ASS", "AAA");
+        slimesToGold.setIngredient('S', Material.SLIME_BALL);
+
+        ShapedRecipe lavaAndWaterToObsidian = new ShapedRecipe(new ItemStack(Material.OBSIDIAN));
+        lavaAndWaterToObsidian.shape("AAA", "AWL", "AAA");
+        lavaAndWaterToObsidian.setIngredient('W', Material.WATER_BUCKET);
+        lavaAndWaterToObsidian.setIngredient('L', Material.LAVA_BUCKET);
+
+        ShapedRecipe blazeToEXPBottle = new ShapedRecipe(new ItemStack(Material.EXP_BOTTLE));
+        blazeToEXPBottle.shape("AAA","ABB","AAA");
+        blazeToEXPBottle.setIngredient('B', Material.BLAZE_POWDER);
+
+
+        Bukkit.addRecipe(flowersToIron);
+        Bukkit.addRecipe(slimesToGold);
+        Bukkit.addRecipe(lavaAndWaterToObsidian);
+        Bukkit.addRecipe(blazeToEXPBottle);
     }
 
 
