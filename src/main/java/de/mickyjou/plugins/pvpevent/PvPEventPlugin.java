@@ -90,6 +90,7 @@ public class PvPEventPlugin extends JavaPlugin {
         getCommand("teams").setExecutor(new TeamsCommand());
         getCommand("setspawn").setExecutor(new SpawnCommand());
         getCommand("sethologramm").setExecutor(new HologrammCommand());
+        getCommand("ping").setExecutor(new PingCommand());
 
     }
 

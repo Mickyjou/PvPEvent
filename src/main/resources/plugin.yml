@@ -14,5 +14,6 @@ commands:
           description: Sets the Lobby-Spawn
      sethologramm:
           description: Sets the Lobby-Hologramm
-
+     ping:
+          description: Shows Your Ping
      
