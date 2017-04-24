@@ -109,6 +109,7 @@ public class PvPEventPlugin extends JavaPlugin {
         pm.registerEvents(new PlayerItemConsumeListener(), this);
         pm.registerEvents(new PlayerInteractListener(), this);
         pm.registerEvents(new BlockBreakListener(), this);
+        pm.registerEvents(new PlayerJoinLobbyListener(this), this);
     }
 
     public void registerServices() {

@@ -27,7 +27,7 @@ public class HologrammCommand implements CommandExecutor {
                 p.sendMessage(PvPEventPlugin.prefix + "Click on a Block to save the Location.");
             }
         }else{
-            p.sendMessage(PvPEventPlugin.prefix + "/setskull");
+            p.sendMessage(PvPEventPlugin.prefix + "/sethologramm");
         }
 
         return false;

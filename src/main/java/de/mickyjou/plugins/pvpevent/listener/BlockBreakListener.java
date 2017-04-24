@@ -12,7 +12,7 @@ public class BlockBreakListener implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e){
         if(HologrammCommand.players.contains(e.getPlayer())){
-            Utils.saveLocation(e.getBlock().getLocation(), "skull");
+            Utils.saveLocation(e.getBlock().getLocation(), "hologramm");
             e.getPlayer().sendMessage(PvPEventPlugin.prefix + "Succesfully saved the Location");
             HologrammCommand.players.remove(e.getPlayer());
         }
