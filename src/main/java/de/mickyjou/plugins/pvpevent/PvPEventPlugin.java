@@ -45,7 +45,6 @@ public class PvPEventPlugin extends JavaPlugin {
         startTimer();
         registerRecipes();
 
-
         super.onEnable();
     }
 
@@ -102,7 +101,7 @@ public class PvPEventPlugin extends JavaPlugin {
         PluginManager pm = this.getServer().getPluginManager();
         pm.registerEvents(new PortalCreateListener(), this);
         pm.registerEvents(new PlayerMoveListener(), this);
-        pm.registerEvents(new PlayerDeathListener(), this);
+        pm.registerEvents(new PlayerDeathListener(this), this);
         pm.registerEvents(new PlayerJoinListener(this), this);
         pm.registerEvents(new PlayerQuitListener(), this);
         pm.registerEvents(new PlayerChatListener(), this);
@@ -128,6 +127,8 @@ public class PvPEventPlugin extends JavaPlugin {
         if (!configFile.exists()) {
             try {
                 configFile.createNewFile();
+                cfg.set("LATEST_DEATHS", "");
+                cfg.save(configFile);
             } catch (IOException e) {
                 e.printStackTrace();
             }
