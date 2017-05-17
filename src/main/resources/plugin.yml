@@ -16,4 +16,7 @@ commands:
           description: Sets the Lobby-Hologramm
      ping:
           description: Shows Your Ping
+     clearitem:
+          descruption: Clears your Inventory from one Type
+          aliases: [ci]
      

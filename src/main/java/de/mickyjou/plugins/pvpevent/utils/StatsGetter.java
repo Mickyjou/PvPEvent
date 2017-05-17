@@ -6,6 +6,7 @@ import de.mickyjou.plugins.pvpevent.events.PlayerWarningsChangeEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 import java.util.UUID;
 
@@ -104,4 +105,22 @@ public class StatsGetter {
     public void setSessions(int sessions) {
         getPlayerStore().put("sessions", String.valueOf(sessions));
     }
+
+    public void setLobby(boolean inLobby) {
+        getPlayerStore().put("lobby", String.valueOf(inLobby));
+    }
+
+    public boolean isInLobby() {
+        return getPlayerStore().get("lobby") != null ? Boolean.getBoolean(getPlayerStore().get("lobby")) : false;
+    }
+
+    public void saveInventory(Inventory inventory) {
+        getPlayerStore().put("inventory", Utils.inventoryToString(inventory));
+    }
+
+    public Inventory getInventory() {
+        return Utils.stringToInventory(getPlayerStore().get("inventory"));
+    }
+
+
 }

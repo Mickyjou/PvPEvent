@@ -5,13 +5,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class PlayerJoinLobbyEvent extends Event{
-
+public class PlayerQuitSurvivalEvent extends Event {
 
 
     private final Player p;
 
-    public PlayerJoinLobbyEvent(Player p) {
+    public PlayerQuitSurvivalEvent(Player p) {
         this.p = p;
     }
 
@@ -30,5 +29,7 @@ public class PlayerJoinLobbyEvent extends Event{
         return p;
     }
 
-    public StatsGetter getPlayerStore() { return new StatsGetter(p);}
+    public StatsGetter getPlayerStore() {
+        return new StatsGetter(p);
+    }
 }

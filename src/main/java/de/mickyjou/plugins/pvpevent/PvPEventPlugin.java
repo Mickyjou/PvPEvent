@@ -90,6 +90,7 @@ public class PvPEventPlugin extends JavaPlugin {
         getCommand("setspawn").setExecutor(new SpawnCommand());
         getCommand("sethologramm").setExecutor(new HologrammCommand());
         getCommand("ping").setExecutor(new PingCommand());
+        getCommand("clearitem").setExecutor(new ClearItemCommand());
 
     }
 

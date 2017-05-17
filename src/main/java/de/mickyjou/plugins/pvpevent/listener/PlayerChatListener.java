@@ -1,28 +1,36 @@
 package de.mickyjou.plugins.pvpevent.listener;
 
-import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
+import de.mickyjou.plugins.pvpevent.utils.StatsGetter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class PlayerChatListener implements Listener {
 
     @EventHandler
-    public void onChat(PlayerChatEvent e) {
+    public void onChat(AsyncPlayerChatEvent e) {
 
         Player p = e.getPlayer();
-        if (e.getMessage().trim().equalsIgnoreCase
-                ("ThisIsTheSecretMessageToGetAuthenticatedForTheCraftenServer")) {
-            p.sendMessage(PvPEventPlugin.prefix + "Du wurdest authentifiziert!");
-            e.setCancelled(true);
+        StatsGetter stats = new StatsGetter(p);
 
-        }
+        if(stats.isInLobby()){
+            for(Player all: Bukkit.getOnlinePlayers()){
+                StatsGetter playerStatsGetter = new StatsGetter(all);
+                if(playerStatsGetter.isInLobby() == true){
+                   // all.sendMessage(e.getFormat() + e.getMessage());
+                }
 
+            }
 
-        if (e.getMessage().trim().equalsIgnoreCase(".check")) {
-            p.kickPlayer(PvPEventPlugin.prefix + "Bitte benutze die Craften-Mod!");
-            e.setCancelled(true);
+        }else{
+            for(Player all: Bukkit.getOnlinePlayers()){
+                StatsGetter playerStatsGetter = new StatsGetter(all);
+                if(playerStatsGetter.isInLobby() == false){
+                 //   all.sendMessage(e.getMessage());
+                }
+            }
         }
     }
 }

@@ -37,9 +37,13 @@ public class PlayerJoinListener implements Listener {
             stats.getPlayerStore().put("banned", String.valueOf(false));
             return;
         } else if (hours >= 18 || hours <= 14) {
+            if (!p.isOp()) {
 
-            //e.disallow(PlayerLoginEvent.Result.KICK_BANNED, PvPEventPlugin.prefix
-            //  + "Du kannst nur zwischen 14 und 18 Uhr spielen.");
+
+                e.disallow(PlayerLoginEvent.Result.KICK_BANNED, PvPEventPlugin.prefix
+                        + "Du kannst nur zwischen 14 und 18 Uhr spielen.");
+            }
+
 
         } else {
             Countdown.startCouuntdown(p);

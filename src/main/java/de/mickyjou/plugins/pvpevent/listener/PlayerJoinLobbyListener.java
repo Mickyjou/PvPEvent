@@ -31,9 +31,10 @@ public class PlayerJoinLobbyListener implements Listener {
         if (lobbyLocation == null || hologrammLocation == null) return;
 
         Player p = e.getPlayer();
-        StatsGetter stats = new StatsGetter(p);
-        String[] text = {"§6§nStats von §7§n" + p.getName() + "§6:", " ", "§6Team: §7" + stats.getTeam(), "§6Team-Mate: §7" + Bukkit.getOfflinePlayer(stats.getTeamMate()).getName(),
-                "§6Kills: §7" + stats.getKills(), "§6Verwarnungen: §7" + stats.getWarnings()
+        StatsGetter stats = e.getPlayerStore();
+        stats.setLobby(true);
+        String[] text = {"§6§nYour Stats §7§n" + p.getName() + "§6:", " ", "§6Team: §7" + stats.getTeam(), "§6Team-Mate: §7" + Bukkit.getOfflinePlayer(stats.getTeamMate()).getName(),
+                "§6Kills: §7" + stats.getKills(), "§6Warnings: §7" + stats.getWarnings()
         };
         Hologram hologram = new Hologram(text, hologrammLocation);
         hologram.showPlayer(p);
