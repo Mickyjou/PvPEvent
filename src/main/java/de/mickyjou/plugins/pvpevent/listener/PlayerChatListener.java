@@ -14,12 +14,13 @@ public class PlayerChatListener implements Listener {
 
         Player p = e.getPlayer();
         StatsGetter stats = new StatsGetter(p);
+        e.setCancelled(true);
 
         if(stats.isInLobby()){
             for(Player all: Bukkit.getOnlinePlayers()){
                 StatsGetter playerStatsGetter = new StatsGetter(all);
                 if(playerStatsGetter.isInLobby() == true){
-                   // all.sendMessage(e.getFormat() + e.getMessage());
+                    all.sendMessage(e.getFormat() + e.getMessage());
                 }
 
             }
@@ -28,7 +29,7 @@ public class PlayerChatListener implements Listener {
             for(Player all: Bukkit.getOnlinePlayers()){
                 StatsGetter playerStatsGetter = new StatsGetter(all);
                 if(playerStatsGetter.isInLobby() == false){
-                 //   all.sendMessage(e.getMessage());
+                    all.sendMessage(e.getMessage());
                 }
             }
         }
