@@ -115,11 +115,11 @@ public class StatsGetter {
     }
 
     public void saveInventory(Inventory inventory) {
-        getPlayerStore().put("inventory", Utils.inventoryToString(inventory));
+        getPlayerStore().put("inventory", ItemSerialization.inventoryToString(inventory));
     }
 
     public Inventory getInventory() {
-        return Utils.stringToInventory(getPlayerStore().get("inventory"));
+        return ItemSerialization.stringToInventory(getPlayerStore().get("inventory"));
     }
 
 

@@ -19,4 +19,6 @@ commands:
      clearitem:
           descruption: Clears your Inventory from one Type
           aliases: [ci]
+     setzombie:
+          description: Sets the Spawn-Zombie
      

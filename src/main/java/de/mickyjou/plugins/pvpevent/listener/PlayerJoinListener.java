@@ -2,7 +2,6 @@ package de.mickyjou.plugins.pvpevent.listener;
 
 import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
 import de.mickyjou.plugins.pvpevent.events.PlayerJoinLobbyEvent;
-import de.mickyjou.plugins.pvpevent.utils.Countdown;
 import de.mickyjou.plugins.pvpevent.utils.StatsGetter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -46,7 +45,7 @@ public class PlayerJoinListener implements Listener {
 
 
         } else {
-            Countdown.startCouuntdown(p);
+            Bukkit.getPluginManager().callEvent(new PlayerJoinLobbyEvent(p));
 
         }
     }

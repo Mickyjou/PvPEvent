@@ -12,23 +12,24 @@ public class PlayerChatListener implements Listener {
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e) {
 
+
         Player p = e.getPlayer();
         StatsGetter stats = new StatsGetter(p);
         e.setCancelled(true);
 
-        if(stats.isInLobby()){
-            for(Player all: Bukkit.getOnlinePlayers()){
+        if (stats.isInLobby()) {
+            for (Player all : Bukkit.getOnlinePlayers()) {
                 StatsGetter playerStatsGetter = new StatsGetter(all);
-                if(playerStatsGetter.isInLobby() == true){
+                if (playerStatsGetter.isInLobby() == true) {
                     all.sendMessage(e.getFormat() + e.getMessage());
                 }
 
             }
 
-        }else{
-            for(Player all: Bukkit.getOnlinePlayers()){
+        } else {
+            for (Player all : Bukkit.getOnlinePlayers()) {
                 StatsGetter playerStatsGetter = new StatsGetter(all);
-                if(playerStatsGetter.isInLobby() == false){
+                if (playerStatsGetter.isInLobby() == false) {
                     all.sendMessage(e.getMessage());
                 }
             }

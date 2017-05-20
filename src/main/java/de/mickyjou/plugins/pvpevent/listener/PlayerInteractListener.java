@@ -1,10 +1,17 @@
 package de.mickyjou.plugins.pvpevent.listener;
 
 import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
+import de.mickyjou.plugins.pvpevent.events.PlayerJoinSurvivalEvent;
+import de.mickyjou.plugins.pvpevent.utils.StatsGetter;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffectType;
@@ -35,6 +42,25 @@ public class PlayerInteractListener implements Listener {
             }
         }catch (Exception ex){
 
+        }
+
+
+
+
+    }
+
+
+    @EventHandler
+    public void onInteract(PlayerInteractAtEntityEvent e){
+        Player p = e.getPlayer();
+        if(e.getRightClicked().getType() == EntityType.ARMOR_STAND){
+            ArmorStand stand = (ArmorStand) e.getRightClicked();
+            if(stand.getName().equals("§6JOIN SURVIVAL")){
+                if(new StatsGetter(p).isInLobby() == false) {
+                    e.setCancelled(true);
+                    Bukkit.getPluginManager().callEvent(new PlayerJoinSurvivalEvent(p));
+                }
+            }
         }
     }
 }

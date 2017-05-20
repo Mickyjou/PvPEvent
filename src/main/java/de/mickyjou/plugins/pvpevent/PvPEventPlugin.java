@@ -44,6 +44,7 @@ public class PvPEventPlugin extends JavaPlugin {
       //  resetAllStores();
         startTimer();
         registerRecipes();
+        Utils.spawnZombie();
 
         super.onEnable();
     }
@@ -69,6 +70,7 @@ public class PvPEventPlugin extends JavaPlugin {
         for (Player all : Bukkit.getOnlinePlayers()) {
             Countdown.stopCountdown(all);
         }
+        Utils.despawnZombie();
 
         super.onDisable();
     }
@@ -91,6 +93,7 @@ public class PvPEventPlugin extends JavaPlugin {
         getCommand("sethologramm").setExecutor(new HologrammCommand());
         getCommand("ping").setExecutor(new PingCommand());
         getCommand("clearitem").setExecutor(new ClearItemCommand());
+        getCommand("setzombie").setExecutor(new ZombieCommand());
 
     }
 

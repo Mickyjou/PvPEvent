@@ -1,18 +1,18 @@
 package de.mickyjou.plugins.pvpevent.listener;
 
 import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
+import de.mickyjou.plugins.pvpevent.utils.Laser;
 import de.mickyjou.plugins.pvpevent.utils.StatsGetter;
 import de.mickyjou.plugins.pvpevent.utils.WorldBorder;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
+import org.bukkit.*;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 import javax.imageio.ImageIO;
+import java.awt.Color;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -29,6 +29,22 @@ public class PlayerDeathListener implements Listener {
 
     public PlayerDeathListener(PvPEventPlugin plugin) {
         this.plugin = plugin;
+    }
+
+
+
+    @EventHandler
+    public void onDeath(PlayerDeathEvent e){
+
+        Location armor = e.getEntity().getLocation().clone().add(0,250,0);
+        Location laserLoc = e.getEntity().getLocation().clone().add(0,0.5,0);
+
+        ArmorStand a = armor.getWorld().spawn(armor, ArmorStand.class);
+        a.setGravity(false);
+        a.setVisible(false);
+
+        Laser laser = new Laser(laserLoc);
+        laser.setTarget(a);
     }
 
     @EventHandler
@@ -61,7 +77,7 @@ public class PlayerDeathListener implements Listener {
         BufferedImage image;
 
 
-            latestDeaths.add(death.getUniqueId().toString());
+        latestDeaths.add(death.getUniqueId().toString());
 
         try {
             plugin.cfg.set("LATEST_DEATHS", latestDeaths);
@@ -94,13 +110,12 @@ public class PlayerDeathListener implements Listener {
         File outputFile = new File("/var/lib/minecraft/plugins/PictureFrame/images", "Deaths.png");
 
         try {
-            ImageIO.write(image,"png", outputFile);
+            ImageIO.write(image, "png", outputFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pf reload");
+        //  Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pf reload");
     }
-
 
 
 }
