@@ -4,6 +4,7 @@ import de.craften.plugins.playerdatastore.api.PlayerDataStore;
 import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
 import de.mickyjou.plugins.pvpevent.events.PlayerWarningsChangeEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -114,13 +115,72 @@ public class StatsGetter {
         return getPlayerStore().get("lobby") != null ? Boolean.getBoolean(getPlayerStore().get("lobby")) : false;
     }
 
-    public void saveInventory(Inventory inventory) {
+    private void saveInventory(Inventory inventory) {
         getPlayerStore().put("inventory", ItemSerialization.inventoryToString(inventory));
     }
 
-    public Inventory getInventory() {
+    private Inventory getInventory() {
         return ItemSerialization.stringToInventory(getPlayerStore().get("inventory"));
     }
+
+    public void set(String string1,String string2) {
+        getPlayerStore().put(string1,string2);
+    }
+
+    public void set(String string1,int string2) {
+        getPlayerStore().put(string1,String.valueOf(string2));
+    }
+
+    public void set(String string1,double string2) {
+        getPlayerStore().put(string1,String.valueOf(string2));
+    }
+
+
+    public String get(String string1) {
+        return getPlayerStore().get(string1) != null ? getPlayerStore().get(string1) : null;
+    }
+
+
+
+
+    public void saveSurvivalStats(Player p) {
+        saveInventory(p.getInventory());
+        set("exp", p.getTotalExperience());
+        set("food", p.getFoodLevel());
+        set("health", p.getHealth());
+        set("location", Utils.getStringLocation(p.getLocation()));
+
+
+        p.setExp(0);
+        p.setFoodLevel(20);
+        p.setHealth(20);
+
+    }
+
+    public void setSurvivalStats(Player p) {
+
+        if(get("exp") == null){
+            p.setExp(0);
+            p.setLevel(0);
+            p.setFoodLevel(20);
+            p.setHealth(20);
+            p.teleport(new Location(Bukkit.getWorld("world"),0,80,0));
+            return;
+        }
+
+        p.getInventory().clear();
+        p.getInventory().setContents(getInventory().getContents());
+        p.setExp(Float.valueOf(get("exp")));
+        p.setFoodLevel(Integer.valueOf(get("food")));
+        p.setHealth(Integer.valueOf(get("health")));
+        p.teleport(Utils.getLocationString(get("location")));
+
+    }
+
+
+
+
+
 
 
 }

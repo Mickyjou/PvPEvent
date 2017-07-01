@@ -1,4 +1,4 @@
-package de.mickyjou.plugins.pvpevent.listener;
+package de.mickyjou.plugins.pvpevent.listener.joinlisteners;
 
 import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
 import de.mickyjou.plugins.pvpevent.events.PlayerJoinLobbyEvent;
@@ -30,7 +30,7 @@ public class PlayerJoinListener implements Listener {
         Player p = e.getPlayer();
         StatsGetter stats = new StatsGetter(p);
         Date date = new Date();
-        int hours = date.getHours() + 1;
+        int hours = date.getHours();
         if (stats.isBanned()) {
             e.disallow(PlayerLoginEvent.Result.KICK_BANNED, PvPEventPlugin.prefix + "Du bist bereits aus dem Projekt ausgeschieden!");
             stats.getPlayerStore().put("banned", String.valueOf(false));
