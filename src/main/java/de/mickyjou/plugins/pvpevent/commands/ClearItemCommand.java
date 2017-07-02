@@ -59,7 +59,58 @@ public class ClearItemCommand implements CommandExecutor {
 
 
         } else if (args.length == 2) {
-            p.sendMessage("lol");
+
+
+
+
+            Integer itemID = null;
+            byte bt = 0;
+            boolean isNumeric;
+            Material toClear;
+
+            try {
+                itemID = Integer.parseInt(args[0]);
+                isNumeric = true;
+            } catch (Exception e) {
+                isNumeric = false;
+            }
+
+            if (isNumeric) {
+                if (Material.getMaterial(Integer.valueOf(args[0])) != null) {
+                    toClear = Material.getMaterial(Integer.valueOf(args[0]));
+                } else {
+                    p.sendMessage(PvPEventPlugin.prefix + "Could not find Item with the ID " + itemID);
+                    return true;
+                }
+            } else {
+                if (Material.getMaterial(args[0].toUpperCase()) != null) {
+                    toClear = Material.getMaterial(args[0].toUpperCase());
+                } else {
+                    p.sendMessage(PvPEventPlugin.prefix + "Could not find Item with the name" + args[0].toUpperCase());
+                    return true;
+                }
+            }
+
+
+            try {
+                bt = Byte.parseByte(args[1]);
+                toClear = new ItemStack(toClear,1,bt).getType();
+            } catch (Exception e) {
+                p.sendMessage(PvPEventPlugin.prefix + "Please enter a valid Byte.");
+                return true;
+            }
+
+
+
+            clearItem(p, toClear, bt);
+            try {
+                p.sendMessage(PvPEventPlugin.prefix + "Succsessfully cleared all Items of the Type " + ChatColor.GOLD + toClear.toString() + ChatColor.GRAY + ".");
+            } catch (Exception e) {
+                p.sendMessage(e.getMessage());
+            }
+
+
+
 
         } else {
             p.sendMessage(PvPEventPlugin.prefix + "/clearitem ID (subID)");

@@ -7,6 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,15 @@ public class ChestCommand implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("clearlist")) {
                 Utils.clearChestList();
                 p.sendMessage(PvPEventPlugin.prefix + "Succesfully cleared the itemlist");
-            } else {
+            }else if(args[0].equalsIgnoreCase("list")){
+                for(ItemStack all: Utils.getChestItems()){
+                    p.sendMessage(all.getAmount() + " " + all.getType().toString());
+                }
+            } else if(args[0].equalsIgnoreCase("removelast")){
+            Utils.removeLastChestItem();
+            p.sendMessage(PvPEventPlugin.prefix + "Removed Succesfully the last element of the list.");
+            }
+            else {
                 sendHelp(p);
             }
         } else if (args.length == 3) {

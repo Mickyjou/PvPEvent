@@ -228,4 +228,19 @@ public class Utils {
         return items;
     }
 
+    public static void removeLastChestItem() {
+        File file = new File(FileManager.getDataFolder(), "config.yml");
+        FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+
+        List<String> items = cfg.getStringList("Chestitems");
+        items.remove(items.size() - 1);
+        cfg.set("Chestitems", items);
+
+        try {
+            cfg.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

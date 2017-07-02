@@ -15,13 +15,11 @@ public class PlayerQuitSurvivalListener implements Listener {
         Player p = e.getPlayer();
         StatsGetter stats = new StatsGetter(p);
         stats.saveSurvivalStats(p);
-        stats.setLobby(true);
 
 
-        p.getInventory().clear();
-        p.setFoodLevel(20);
-        p.setHealth(20);
-        p.setTotalExperience(0);
+
+
+
 
     }
 }

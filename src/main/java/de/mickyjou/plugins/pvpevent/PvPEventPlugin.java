@@ -4,16 +4,18 @@ import de.craften.plugins.playerdatastore.api.PlayerDataStoreService;
 import de.mickyjou.plugins.pvpevent.commands.*;
 import de.mickyjou.plugins.pvpevent.listener.BlockBreakListener;
 import de.mickyjou.plugins.pvpevent.listener.chestopening.ChestProtectionListener;
+import de.mickyjou.plugins.pvpevent.listener.chestopening.PlayerInventoryOpenListener;
 import de.mickyjou.plugins.pvpevent.listener.join.PlayerJoinListener;
 import de.mickyjou.plugins.pvpevent.listener.join.PlayerJoinLobbyListener;
 import de.mickyjou.plugins.pvpevent.listener.join.PlayerJoinSurvivalListener;
 import de.mickyjou.plugins.pvpevent.listener.player.PlayerChatListener;
+import de.mickyjou.plugins.pvpevent.listener.player.PlayerInteractCompassListener;
 import de.mickyjou.plugins.pvpevent.listener.player.PlayerInteractZombieListener;
-import de.mickyjou.plugins.pvpevent.listener.chestopening.PlayerInventoryOpenListener;
 import de.mickyjou.plugins.pvpevent.listener.protection.LobbyProtectionListener;
 import de.mickyjou.plugins.pvpevent.listener.protection.PlayerInteractListener;
 import de.mickyjou.plugins.pvpevent.listener.protection.PortalCreateListener;
 import de.mickyjou.plugins.pvpevent.listener.quit.PlayerQuitListener;
+import de.mickyjou.plugins.pvpevent.listener.quit.PlayerQuitLobbyListener;
 import de.mickyjou.plugins.pvpevent.listener.quit.PlayerQuitSurvivalListener;
 import de.mickyjou.plugins.pvpevent.listener.survival.PlayerDeathListener;
 import de.mickyjou.plugins.pvpevent.listener.survival.PlayerItemConsumeListener;
@@ -56,7 +58,7 @@ public class PvPEventPlugin extends JavaPlugin {
         registerServices();
         registerCommands();
         registerEvents();
-      //  resetAllStores();
+        //  resetAllStores();
         startTimer();
         registerRecipes();
         Utils.spawnZombie();
@@ -111,6 +113,8 @@ public class PvPEventPlugin extends JavaPlugin {
         getCommand("clearitem").setExecutor(new ClearItemCommand());
         getCommand("setzombie").setExecutor(new ZombieCommand());
         getCommand("chest").setExecutor(new ChestCommand());
+        getCommand("compass").setExecutor(new CompassCommand());
+        getCommand("response").setExecutor(new ResponseCommand());
 
     }
 
@@ -130,12 +134,14 @@ public class PvPEventPlugin extends JavaPlugin {
         pm.registerEvents(new PlayerInteractListener(), this);
         pm.registerEvents(new BlockBreakListener(), this);
         pm.registerEvents(new PlayerJoinLobbyListener(this), this);
-        pm.registerEvents(new LobbyProtectionListener(),this);
-        pm.registerEvents(new PlayerJoinSurvivalListener(),this);
-        pm.registerEvents(new PlayerQuitSurvivalListener(),this);
-        pm.registerEvents(new PlayerInteractZombieListener(),this);
-        pm.registerEvents(new PlayerInventoryOpenListener(),this);
-        pm.registerEvents(new ChestProtectionListener(),this);
+        pm.registerEvents(new LobbyProtectionListener(), this);
+        pm.registerEvents(new PlayerJoinSurvivalListener(), this);
+        pm.registerEvents(new PlayerQuitSurvivalListener(), this);
+        pm.registerEvents(new PlayerInteractZombieListener(), this);
+        pm.registerEvents(new PlayerInventoryOpenListener(), this);
+        pm.registerEvents(new ChestProtectionListener(), this);
+        pm.registerEvents(new PlayerInteractCompassListener(), this);
+        pm.registerEvents(new PlayerQuitLobbyListener(), this);
 
     }
 

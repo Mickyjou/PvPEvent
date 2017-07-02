@@ -57,4 +57,16 @@ public class LobbyProtectionListener implements Listener {
     }
 
 
+    @EventHandler
+    public void onClick(InventoryClickEvent e){
+        if(e.getInventory() != null){
+            StatsGetter stats = new StatsGetter((Player) e.getWhoClicked());
+            if(stats.isInLobby()){
+                if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§7Navigator"))
+                e.setCancelled(true);
+            }
+        }
+    }
+
+
 }

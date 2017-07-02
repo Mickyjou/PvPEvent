@@ -75,8 +75,9 @@ public class ChestCountdown
                     player.getOpenInventory().close();
                     player.sendMessage(PvPEventPlugin.prefix + "Congrats! You got " + ChatColor.GOLD + win.getAmount() + " " +
                             WordUtils.capitalize(win.getType().toString().toLowerCase()).replace("_", " ") + ChatColor.GRAY + ".");
-                    new StatsGetter(player).addSurivalItem(win);
-                    player.playSound(player.getLocation(),Sound.NOTE_STICKS, 1.0F, 1.0F);
+                    new StatsGetter(player).addSurivalItem(win, player);
+                    player.playSound(player.getLocation(), Sound.FIREWORK_TWINKLE2, 1.0F, 1.0F);
+                    player.teleport(Utils.getLocation("lobby"));
                 }
             }, 40L);
         }
