@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
@@ -112,7 +113,7 @@ public class StatsGetter {
     }
 
     public boolean isInLobby() {
-        return getPlayerStore().get("lobby") != null ? Boolean.getBoolean(getPlayerStore().get("lobby")) : false;
+        return getPlayerStore().get("lobby") != null ? Boolean.valueOf(getPlayerStore().get("lobby")) : false;
     }
 
     private void saveInventory(Inventory inventory) {
@@ -179,6 +180,11 @@ public class StatsGetter {
 
 
 
+    public void addSurivalItem(ItemStack toAdd){
+        Inventory inv = getInventory();
+        inv.addItem(toAdd);
+        saveInventory(inv);
+    }
 
 
 

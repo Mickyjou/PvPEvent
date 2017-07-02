@@ -1,4 +1,4 @@
-package de.mickyjou.plugins.pvpevent.listener;
+package de.mickyjou.plugins.pvpevent.listener.quit;
 
 import de.mickyjou.plugins.pvpevent.events.PlayerQuitSurvivalEvent;
 import de.mickyjou.plugins.pvpevent.utils.StatsGetter;
@@ -8,13 +8,20 @@ import org.bukkit.event.Listener;
 
 public class PlayerQuitSurvivalListener implements Listener {
 
+
     @EventHandler
-    public void onPlayerQuitSurvival(PlayerQuitSurvivalEvent e) {
+    public void onPlayerQuit(PlayerQuitSurvivalEvent e){
+
         Player p = e.getPlayer();
         StatsGetter stats = new StatsGetter(p);
-        e.getPlayerStore().saveInventory(e.getPlayer().getInventory());
-        e.getPlayer().getInventory().clear();
+        stats.saveSurvivalStats(p);
         stats.setLobby(true);
+
+
+        p.getInventory().clear();
+        p.setFoodLevel(20);
+        p.setHealth(20);
+        p.setTotalExperience(0);
 
     }
 }

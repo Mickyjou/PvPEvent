@@ -21,11 +21,15 @@ public class HologrammCommand implements CommandExecutor {
         }
         Player p = (Player) sender;
 
+        if(!p.isOp()) {
+            p.sendMessage(PvPEventPlugin.prefix + "You've to be OP to execute this command.");
+            return true;
+        }
+
         if(args.length == 0){
-            if(p.isOp()){
                 players.add(p);
                 p.sendMessage(PvPEventPlugin.prefix + "Click on a Block to save the Location.");
-            }
+
         }else{
             p.sendMessage(PvPEventPlugin.prefix + "/sethologramm");
         }

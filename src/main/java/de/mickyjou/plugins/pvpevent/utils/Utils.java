@@ -2,18 +2,24 @@ package de.mickyjou.plugins.pvpevent.utils;
 
 import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
 import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.v1_8_R3.block.CraftChest;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.material.Chest;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Utils {
 
@@ -101,7 +107,7 @@ public class Utils {
                 zombie.setChestplate(getGreenArmor(2));
                 zombie.setBasePlate(false);
                 zombie.setItemInHand(new ItemStack(Material.DIAMOND_SWORD));
-            }catch(Exception e){
+            } catch (Exception e) {
             }
 
         }
@@ -109,9 +115,8 @@ public class Utils {
     }
 
     public static void despawnZombie() {
-        if(zombie != null) zombie.remove();
+        if (zombie != null) zombie.remove();
     }
-
 
 
     public static ItemStack getGreenArmor(int id) {
@@ -126,10 +131,10 @@ public class Utils {
             stack = new ItemStack(Material.LEATHER_HELMET);
         } else return null;
 
-    LeatherArmorMeta meta = (LeatherArmorMeta) stack.getItemMeta();
-    meta.setColor(Color.GREEN);
-    stack.setItemMeta(meta);
-    return stack;
+        LeatherArmorMeta meta = (LeatherArmorMeta) stack.getItemMeta();
+        meta.setColor(Color.GREEN);
+        stack.setItemMeta(meta);
+        return stack;
     }
 
     public static String getStringLocation(final Location l) {
@@ -153,6 +158,74 @@ public class Utils {
             return new Location(w, x, y, z);
         }
         return null;
+    }
+
+
+    public static void spawnChest() {
+
+        Location loc = getLocation("chest");
+        if (loc == null) return;
+        Block block = loc.getBlock();
+        block.setType(Material.CHEST);
+        BlockState state = block.getState();
+        Chest chest = new Chest(BlockFace.EAST);
+        state.setData(chest);
+        state.update();
+
+        CraftChest craftchest = (CraftChest) loc.getBlock().getState();
+        craftchest.getTileEntity().a("§6Daily Reward");
+
+
+    }
+
+
+    public static void addChestItem(Material material, int amount) {
+        File file = new File(FileManager.getDataFolder(), "config.yml");
+        FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+
+        List<String> items = cfg.getStringList("Chestitems");
+        items.add(material.name() + " " + String.valueOf(amount));
+        cfg.set("Chestitems", items);
+
+
+        try {
+            cfg.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public static void clearChestList() {
+        File file = new File(FileManager.getDataFolder(), "config.yml");
+        FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+
+        List<String> items = cfg.getStringList("Chestitems");
+        items.clear();
+        cfg.set("Chestitems", items);
+
+        try {
+            cfg.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static List<ItemStack> getChestItems() {
+        File file = new File(FileManager.getDataFolder(), "config.yml");
+        FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+
+
+        List<ItemStack> items = new ArrayList<>();
+        List<String> toSplit = cfg.getStringList("Chestitems");
+        for(String all: toSplit){
+            String[] split = all.split(" ");
+            items.add(new ItemStack(Material.valueOf(split[0]), Integer.parseInt(split[1])));
+        }
+
+        return items;
     }
 
 }

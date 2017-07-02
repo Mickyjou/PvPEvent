@@ -2,10 +2,22 @@ package de.mickyjou.plugins.pvpevent;
 
 import de.craften.plugins.playerdatastore.api.PlayerDataStoreService;
 import de.mickyjou.plugins.pvpevent.commands.*;
-import de.mickyjou.plugins.pvpevent.listener.*;
-import de.mickyjou.plugins.pvpevent.listener.joinlisteners.PlayerJoinListener;
-import de.mickyjou.plugins.pvpevent.listener.joinlisteners.PlayerJoinLobbyListener;
-import de.mickyjou.plugins.pvpevent.listener.joinlisteners.PlayerJoinSurvivalListener;
+import de.mickyjou.plugins.pvpevent.listener.BlockBreakListener;
+import de.mickyjou.plugins.pvpevent.listener.chestopening.ChestProtectionListener;
+import de.mickyjou.plugins.pvpevent.listener.join.PlayerJoinListener;
+import de.mickyjou.plugins.pvpevent.listener.join.PlayerJoinLobbyListener;
+import de.mickyjou.plugins.pvpevent.listener.join.PlayerJoinSurvivalListener;
+import de.mickyjou.plugins.pvpevent.listener.player.PlayerChatListener;
+import de.mickyjou.plugins.pvpevent.listener.player.PlayerInteractZombieListener;
+import de.mickyjou.plugins.pvpevent.listener.chestopening.PlayerInventoryOpenListener;
+import de.mickyjou.plugins.pvpevent.listener.protection.LobbyProtectionListener;
+import de.mickyjou.plugins.pvpevent.listener.protection.PlayerInteractListener;
+import de.mickyjou.plugins.pvpevent.listener.protection.PortalCreateListener;
+import de.mickyjou.plugins.pvpevent.listener.quit.PlayerQuitListener;
+import de.mickyjou.plugins.pvpevent.listener.quit.PlayerQuitSurvivalListener;
+import de.mickyjou.plugins.pvpevent.listener.survival.PlayerDeathListener;
+import de.mickyjou.plugins.pvpevent.listener.survival.PlayerItemConsumeListener;
+import de.mickyjou.plugins.pvpevent.listener.survival.PlayerMoveListener;
 import de.mickyjou.plugins.pvpevent.utils.Countdown;
 import de.mickyjou.plugins.pvpevent.utils.EventTeam;
 import de.mickyjou.plugins.pvpevent.utils.StatsGetter;
@@ -48,6 +60,7 @@ public class PvPEventPlugin extends JavaPlugin {
         startTimer();
         registerRecipes();
         Utils.spawnZombie();
+        Utils.spawnChest();
 
         super.onEnable();
     }
@@ -97,6 +110,7 @@ public class PvPEventPlugin extends JavaPlugin {
         getCommand("ping").setExecutor(new PingCommand());
         getCommand("clearitem").setExecutor(new ClearItemCommand());
         getCommand("setzombie").setExecutor(new ZombieCommand());
+        getCommand("chest").setExecutor(new ChestCommand());
 
     }
 
@@ -119,6 +133,10 @@ public class PvPEventPlugin extends JavaPlugin {
         pm.registerEvents(new LobbyProtectionListener(),this);
         pm.registerEvents(new PlayerJoinSurvivalListener(),this);
         pm.registerEvents(new PlayerQuitSurvivalListener(),this);
+        pm.registerEvents(new PlayerInteractZombieListener(),this);
+        pm.registerEvents(new PlayerInventoryOpenListener(),this);
+        pm.registerEvents(new ChestProtectionListener(),this);
+
     }
 
     public void registerServices() {

@@ -21,4 +21,8 @@ commands:
           aliases: [ci]
      setzombie:
           description: Sets the Spawn-Zombie
+     chest:
+          description: Main command for the Case-Opening in the Lobby
+
+
      

@@ -1,7 +1,8 @@
-package de.mickyjou.plugins.pvpevent.listener;
+package de.mickyjou.plugins.pvpevent.listener.player;
 
 import de.mickyjou.plugins.pvpevent.utils.StatsGetter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,7 +22,7 @@ public class PlayerChatListener implements Listener {
             for (Player all : Bukkit.getOnlinePlayers()) {
                 StatsGetter playerStatsGetter = new StatsGetter(all);
                 if (playerStatsGetter.isInLobby() == true) {
-                    all.sendMessage(e.getFormat() + e.getMessage());
+                    all.sendMessage(ChatColor.GRAY  + "<" + p.getName() + "> " + ChatColor.WHITE + e.getMessage());
                 }
 
             }
@@ -30,7 +31,7 @@ public class PlayerChatListener implements Listener {
             for (Player all : Bukkit.getOnlinePlayers()) {
                 StatsGetter playerStatsGetter = new StatsGetter(all);
                 if (playerStatsGetter.isInLobby() == false) {
-                    all.sendMessage(e.getMessage());
+                    all.sendMessage(ChatColor.GRAY  + "<" + p.getName() + "> " + ChatColor.WHITE + e.getMessage());
                 }
             }
         }
