@@ -17,7 +17,7 @@ import java.util.List;
 public class Hologram {
 
 
-    private List<EntityArmorStand> entitylist = new ArrayList<EntityArmorStand>();
+    public static List<EntityArmorStand> entitylist = new ArrayList<EntityArmorStand>();
     private String[] Text;
     private Location location;
     private double DISTANCE = 0.25D;

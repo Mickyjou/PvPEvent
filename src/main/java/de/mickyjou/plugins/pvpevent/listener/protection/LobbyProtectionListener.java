@@ -75,7 +75,6 @@ public class LobbyProtectionListener implements Listener {
     public void onWeatherChange(WeatherChangeEvent e){
         if(e.getWorld().equals(Utils.getLocation("lobby").getWorld())){
             e.getWorld().setWeatherDuration(1);
-            e.getWorld().setStorm(false);
             e.getWorld().setTime(500);
         }
 

@@ -54,7 +54,7 @@ public class PlayerInteractListener implements Listener {
                 if(chest.getInventory().getName().equalsIgnoreCase("§6Daily Reward")){
                     if(new StatsGetter(e.getPlayer()).hasTimeTask("caseopening")) {
                         e.setCancelled(true);
-                        e.getPlayer().sendMessage(PvPEventPlugin.prefix + "You can only open aone case every 24 hours.");
+                        e.getPlayer().sendMessage(PvPEventPlugin.prefix + "You can only open one case every 24 hours.");
                     }
                 }
             }

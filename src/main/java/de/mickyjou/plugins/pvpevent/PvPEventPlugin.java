@@ -11,6 +11,7 @@ import de.mickyjou.plugins.pvpevent.listener.join.PlayerJoinSurvivalListener;
 import de.mickyjou.plugins.pvpevent.listener.player.PlayerChatListener;
 import de.mickyjou.plugins.pvpevent.listener.player.PlayerInteractCompassListener;
 import de.mickyjou.plugins.pvpevent.listener.player.PlayerInteractZombieListener;
+import de.mickyjou.plugins.pvpevent.listener.player.SignInteractListener;
 import de.mickyjou.plugins.pvpevent.listener.protection.LobbyProtectionListener;
 import de.mickyjou.plugins.pvpevent.listener.protection.PlayerInteractListener;
 import de.mickyjou.plugins.pvpevent.listener.protection.PortalCreateListener;
@@ -63,6 +64,7 @@ public class PvPEventPlugin extends JavaPlugin {
         registerRecipes();
         Utils.spawnZombie();
         Utils.spawnChest();
+        SignInteractListener.setFirstTeam();
 
         super.onEnable();
     }
@@ -115,6 +117,7 @@ public class PvPEventPlugin extends JavaPlugin {
         getCommand("chest").setExecutor(new ChestCommand());
         getCommand("compass").setExecutor(new CompassCommand());
         getCommand("response").setExecutor(new ResponseCommand());
+        getCommand("npc").setExecutor(new NPCCommand());
 
     }
 
@@ -142,6 +145,7 @@ public class PvPEventPlugin extends JavaPlugin {
         pm.registerEvents(new ChestProtectionListener(), this);
         pm.registerEvents(new PlayerInteractCompassListener(), this);
         pm.registerEvents(new PlayerQuitLobbyListener(), this);
+        pm.registerEvents(new SignInteractListener(), this);
 
     }
 

@@ -36,6 +36,7 @@ public class Reflections {
     public void sendPacket(Packet<?> packet) {
         for (Player player : Bukkit.getOnlinePlayers()) {
             sendPacket(packet, player);
+
         }
     }
 

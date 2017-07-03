@@ -24,7 +24,11 @@ commands:
      chest:
           description: Main command for the Case-Opening in the Lobby
      compass:
+          description: Sets the spawns of the locations in the compass
      response:
+          description: Gets the response of the PlayerDataStore
+     npc:
+          description: Sets the NPC-Locations for the Stats-Building
 
 
      
