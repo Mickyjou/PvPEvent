@@ -1,6 +1,7 @@
 package de.mickyjou.plugins.pvpevent.listener.protection;
 
 import de.mickyjou.plugins.pvpevent.utils.StatsGetter;
+import de.mickyjou.plugins.pvpevent.utils.Utils;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,6 +10,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.weather.WeatherChangeEvent;
 
 public class LobbyProtectionListener implements Listener {
 
@@ -66,6 +68,17 @@ public class LobbyProtectionListener implements Listener {
                 e.setCancelled(true);
             }
         }
+    }
+
+
+    @EventHandler
+    public void onWeatherChange(WeatherChangeEvent e){
+        if(e.getWorld().equals(Utils.getLocation("lobby").getWorld())){
+            e.getWorld().setWeatherDuration(1);
+            e.getWorld().setStorm(false);
+            e.getWorld().setTime(500);
+        }
+
     }
 
 

@@ -1,6 +1,7 @@
 package de.mickyjou.plugins.pvpevent.utils;
 
 import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
+import de.mickyjou.plugins.pvpevent.listener.chestopening.PlayerInventoryOpenListener;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -71,13 +72,16 @@ public class ChestCountdown
             Bukkit.getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
                 public void run() {
                     //TODO
+
+                    PlayerInventoryOpenListener.isOpening.put(player,false);
                     ItemStack win = inventory.getItem(13);
                     player.getOpenInventory().close();
                     player.sendMessage(PvPEventPlugin.prefix + "Congrats! You got " + ChatColor.GOLD + win.getAmount() + " " +
                             WordUtils.capitalize(win.getType().toString().toLowerCase()).replace("_", " ") + ChatColor.GRAY + ".");
                     new StatsGetter(player).addSurivalItem(win, player);
-                    player.playSound(player.getLocation(), Sound.FIREWORK_TWINKLE2, 1.0F, 1.0F);
                     player.teleport(Utils.getLocation("lobby"));
+                    player.playSound(player.getLocation(), Sound.FIREWORK_TWINKLE2, 1.0F, 1.0F);
+                    new StatsGetter(player).addTimeTask("caseopening",1,0,0);
                 }
             }, 40L);
         }

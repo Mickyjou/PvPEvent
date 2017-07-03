@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -121,7 +122,7 @@ public class StatsGetter {
     }
 
     public Inventory getInventory(Player p) {
-            return ItemSerialization.stringToInventory(getPlayerStore().get("inventory"));
+        return ItemSerialization.stringToInventory(getPlayerStore().get("inventory"));
     }
 
     public void set(String string1, String string2) {
@@ -181,6 +182,31 @@ public class StatsGetter {
         Inventory inv = getInventory(p);
         inv.addItem(toAdd);
         saveInventory(inv);
+    }
+
+
+    public void addTimeTask(String name, int days, int hours, int minutes) {
+        Date today = new Date();
+        Date taskDate = new Date(today.getYear(), today.getMonth(), today.getDate() + days, today.getHours() + hours, today.getMinutes() + minutes);
+        set(name, taskDate.toString());
+
+
+    }
+
+    public boolean hasTimeTask(String name){
+        String dateString = getPlayerStore().get(name);
+        if(!(dateString.isEmpty() || dateString == null)){
+            Date taskDate = new Date(dateString);
+            Date today = new Date();
+
+            if(taskDate.compareTo(today) <= 0){
+                return false;
+            }else{
+                return true;
+            }
+        }else{
+            return false;
+        }
     }
 
 

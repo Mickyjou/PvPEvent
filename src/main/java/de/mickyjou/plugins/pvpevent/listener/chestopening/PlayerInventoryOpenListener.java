@@ -13,11 +13,15 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class PlayerInventoryOpenListener implements Listener {
     private PvPEventPlugin plugin = PvPEventPlugin.getPlugin(PvPEventPlugin.class);
+    public static Map<Player, Inventory> inventorys = new HashMap<>();
+    public static Map<Player, Boolean> isOpening = new HashMap<>();
 
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent e) {
@@ -26,13 +30,16 @@ public class PlayerInventoryOpenListener implements Listener {
 
         if (stats.isInLobby()) {
             if (e.getInventory().getName().equalsIgnoreCase("§6Daily Reward")) {
-                Inventory inv = e.getInventory();
-                inv.setItem(4, createItemStack(Material.HOPPER, "§7Your item"));
+                if (isOpening.get(p) == false) {
+                    Inventory inv = e.getInventory();
+                    inv.setItem(4, createItemStack(Material.HOPPER, "§7Your item"));
 
-                int countdown = new Random().nextInt(61) + 140;
-                setItems(inv);
-                new ChestCountdown(plugin, p, inv, countdown).runTaskTimer(plugin, 0L, 2L);
-
+                    int countdown = new Random().nextInt(61) + 140;
+                    setItems(inv);
+                    new ChestCountdown(plugin, p, inv, countdown).runTaskTimer(plugin, 0L, 2L);
+                    inventorys.put(p, inv);
+                    isOpening.put(p, true);
+                }
 
             }
         }

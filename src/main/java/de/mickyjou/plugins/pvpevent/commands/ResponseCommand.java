@@ -26,6 +26,7 @@ public class ResponseCommand implements CommandExecutor
             return true;
         }
 
+
         if(args.length == 1){
             String response = new StatsGetter(p).get(args[0]) != null ? new StatsGetter(p).get(args[0]) : "keine Angabe";
             p.sendMessage(PvPEventPlugin.prefix + "Ergebnis: §7" + response );
