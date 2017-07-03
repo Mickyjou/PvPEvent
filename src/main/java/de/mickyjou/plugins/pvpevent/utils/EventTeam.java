@@ -62,5 +62,25 @@ public class EventTeam {
 
     }
 
+    public void delete() {
+        try {
+            StatsGetter p1 = new StatsGetter(UUID.fromString(this.p1));
+            StatsGetter p2 = new StatsGetter(UUID.fromString(this.p2));
+            p1.setTeam(null);
+            p2.setTeam(null);
+            p1.setTeamMate(UUID.fromString(null));
+            p2.setTeamMate(UUID.fromString(null));
+        }catch(NullPointerException e){
+
+        }
+        cfg.set(name, null);
+
+        try {
+            cfg.save(file);
+        } catch (IOException e) {
+
+        }
+    }
+
 
 }

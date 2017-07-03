@@ -47,7 +47,7 @@ public class SignInteractListener implements Listener {
                     }
                 } else if (s.getLine(1).equalsIgnoreCase("Select a Team")) {
                     if (cooldown == false) {
-                     //TODO   openTeamInventory();
+                        //TODO   openTeamInventory();
                         startCooldown(30);
                         cooldown = true;
                     }
@@ -70,8 +70,6 @@ public class SignInteractListener implements Listener {
         currentNPC2.spawn();
 
         setStatsHologram(toSet);
-
-
 
 
     }
@@ -114,7 +112,7 @@ public class SignInteractListener implements Listener {
         currentNPC1.spawn();
         currentNPC2.spawn();
 
-        setStatsHologram(toSet);
+       // setStatsHologram(toSet);
 
     }
 
@@ -139,8 +137,10 @@ public class SignInteractListener implements Listener {
         String kills = "§6Kills: §7" + (stats1.getKills() + stats2.getKills());
         String player1 = "§6Player 1: §7" + team.getPlayers()[0].getName();
         String player2 = "§6Player 2: §7" + team.getPlayers()[1].getName();
-
-        currentHologram = new Hologram(new String[]{teamname,kills,player1,player2}, statsLoc.add(0,1,0));
-        currentHologram.showAll();
+        if (currentHologram == null) {
+            currentHologram = new Hologram(new String[]{teamname, kills, player1, player2},statsLoc);
+        } else {
+            //TODO rename Hologram
+        }
     }
 }

@@ -79,10 +79,25 @@ public class TeamCommand implements CommandExecutor {
             } else {
                 p.sendMessage(PvPEventPlugin.prefix + "/team create [name] [player1] [player2]");
             }
-        } else {
+        }else if(args.length == 2){
+         if(args[0].equalsIgnoreCase("delete")){
+             String toClear = args[1];
+             for(EventTeam all: PvPEventPlugin.teams){
+                 if(all.getName().equalsIgnoreCase(toClear)){
+                     all.delete();
+                     p.sendMessage(PvPEventPlugin.prefix + "Succsesfully deleted the team §7" + all.getName());
+                     return true;
+                 }
+             }
+             p.sendMessage(PvPEventPlugin.prefix + "Couldn't find any team with the name §7" + toClear);
+             return true;
+         }
+        }
+        else {
 
             p.sendMessage(PvPEventPlugin.prefix + "/team");
             p.sendMessage(PvPEventPlugin.prefix + "/team create [name] [player1] [player2]");
+            p.sendMessage(PvPEventPlugin.prefix + "/team delete [name]");
         }
 
         return true;
