@@ -220,7 +220,7 @@ public class Utils {
 
         List<ItemStack> items = new ArrayList<>();
         List<String> toSplit = cfg.getStringList("Chestitems");
-        for(String all: toSplit){
+        for (String all : toSplit) {
             String[] split = all.split(" ");
             items.add(new ItemStack(Material.valueOf(split[0]), Integer.parseInt(split[1])));
         }
@@ -242,8 +242,6 @@ public class Utils {
             e.printStackTrace();
         }
     }
-
-
 
 
 }

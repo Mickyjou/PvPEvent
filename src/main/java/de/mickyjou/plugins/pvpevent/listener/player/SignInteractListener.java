@@ -2,16 +2,24 @@ package de.mickyjou.plugins.pvpevent.listener.player;
 
 import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
 import de.mickyjou.plugins.pvpevent.utils.*;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SignInteractListener implements Listener {
 
@@ -23,6 +31,7 @@ public class SignInteractListener implements Listener {
     private static NPC currentNPC1;
     private static NPC currentNPC2;
     private static Hologram currentHologram;
+    public static Map<String, ItemStack> cachedSkulls = new HashMap<>();
     boolean cooldown = false;
 
 
@@ -47,7 +56,8 @@ public class SignInteractListener implements Listener {
                     }
                 } else if (s.getLine(1).equalsIgnoreCase("Select a Team")) {
                     if (cooldown == false) {
-                        //TODO   openTeamInventory();
+                        openTeamInventory(e.getPlayer());
+
                         startCooldown(30);
                         cooldown = true;
                     }
@@ -98,7 +108,7 @@ public class SignInteractListener implements Listener {
         }
     }
 
-    public void setTeam(Integer team) {
+    public static void setTeam(Integer team) {
 
         if (currentNPC1 != null) {
             currentNPC1.destroy();
@@ -112,7 +122,7 @@ public class SignInteractListener implements Listener {
         currentNPC1.spawn();
         currentNPC2.spawn();
 
-       // setStatsHologram(toSet);
+        // setStatsHologram(toSet);
 
     }
 
@@ -138,9 +148,33 @@ public class SignInteractListener implements Listener {
         String player1 = "§6Player 1: §7" + team.getPlayers()[0].getName();
         String player2 = "§6Player 2: §7" + team.getPlayers()[1].getName();
         if (currentHologram == null) {
-            currentHologram = new Hologram(new String[]{teamname, kills, player1, player2},statsLoc);
+            currentHologram = new Hologram(new String[]{teamname, kills, player1, player2}, statsLoc);
         } else {
             //TODO rename Hologram
+        }
+    }
+
+    public void openTeamInventory(Player p) {
+        Inventory inv = Bukkit.createInventory(null, 36);
+
+
+        for (EventTeam team : PvPEventPlugin.teams) {
+            inv.addItem(cachedSkulls.get(team.getPlayers()[0].getName()));
+        }
+
+        p.openInventory(inv);
+    }
+
+    public static void cacheSkulls() {
+        for (EventTeam team : PvPEventPlugin.teams) {
+
+            ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+            SkullMeta meta = (SkullMeta) skull.getItemMeta();
+            meta.setOwner(team.getPlayers()[0].getName());
+            meta.setDisplayName("§6Team " + "§7§n" + team.getName());
+            skull.setItemMeta(meta);
+            cachedSkulls.put(team.getPlayers()[0].getName(), skull);
+
         }
     }
 }

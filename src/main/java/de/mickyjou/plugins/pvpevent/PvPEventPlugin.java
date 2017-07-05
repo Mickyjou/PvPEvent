@@ -65,6 +65,7 @@ public class PvPEventPlugin extends JavaPlugin {
         Utils.spawnZombie();
         Utils.spawnChest();
         SignInteractListener.setFirstTeam();
+        SignInteractListener.cacheSkulls();
 
         super.onEnable();
     }

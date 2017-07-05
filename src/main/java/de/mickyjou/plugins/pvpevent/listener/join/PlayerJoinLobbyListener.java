@@ -3,6 +3,7 @@ package de.mickyjou.plugins.pvpevent.listener.join;
 import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
 import de.mickyjou.plugins.pvpevent.events.PlayerJoinLobbyEvent;
 import de.mickyjou.plugins.pvpevent.listener.chestopening.PlayerInventoryOpenListener;
+import de.mickyjou.plugins.pvpevent.listener.player.SignInteractListener;
 import de.mickyjou.plugins.pvpevent.utils.Hologram;
 import de.mickyjou.plugins.pvpevent.utils.StatsGetter;
 import de.mickyjou.plugins.pvpevent.utils.Utils;
@@ -47,6 +48,8 @@ public class PlayerJoinLobbyListener implements Listener {
         p.setFoodLevel(20);
         p.setHealth(20);
         p.setLevel(0);
+
+        SignInteractListener.setTeam(SignInteractListener.currentTeam);
 
         setHologramms(p);
         addCompass(p);
