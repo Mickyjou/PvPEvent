@@ -5,6 +5,7 @@ import de.mickyjou.plugins.pvpevent.events.PlayerJoinLobbyEvent;
 import de.mickyjou.plugins.pvpevent.listener.chestopening.PlayerInventoryOpenListener;
 import de.mickyjou.plugins.pvpevent.listener.player.SignInteractListener;
 import de.mickyjou.plugins.pvpevent.utils.Hologram;
+import de.mickyjou.plugins.pvpevent.utils.ScoreboardUtils;
 import de.mickyjou.plugins.pvpevent.utils.StatsGetter;
 import de.mickyjou.plugins.pvpevent.utils.Utils;
 import org.bukkit.Bukkit;
@@ -54,6 +55,7 @@ public class PlayerJoinLobbyListener implements Listener {
         setHologramms(p);
         addCompass(p);
         PlayerInventoryOpenListener.isOpening.put(p,false);
+        ScoreboardUtils.setLobbyScoreboard(p);
 
     }
 

@@ -11,6 +11,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -19,6 +21,7 @@ import java.util.UUID;
 public class StatsGetter {
 
     private UUID uuid;
+    public static Map<UUID, Date> caseDates = new HashMap<>();
 
     public StatsGetter(Player p) {
         this.uuid = p.getUniqueId();
@@ -193,20 +196,65 @@ public class StatsGetter {
 
     }
 
-    public boolean hasTimeTask(String name){
+    public boolean hasTimeTask(String name) {
         String dateString = getPlayerStore().get(name);
-        if(!(dateString.isEmpty() || dateString == null)){
+        if (!(dateString.isEmpty() || dateString == null)) {
             Date taskDate = new Date(dateString);
             Date today = new Date();
 
-            if(taskDate.compareTo(today) <= 0){
+            if (taskDate.compareTo(today) <= 0) {
                 return false;
-            }else{
+            } else {
                 return true;
             }
-        }else{
+        } else {
             return false;
         }
+    }
+
+    public void deleteTimeTask(String name) {
+        if (hasTimeTask(name)) {
+            set(name, new Date().toString());
+        }
+    }
+
+
+    public String getCaseOpeningDate() {
+        Date date;
+
+        if (caseDates.containsKey(uuid)) {
+            date = caseDates.get(uuid);
+        } else {
+            String dateString = getPlayerStore().get("caseopening");
+            if (!(dateString.isEmpty() || dateString == null)) {
+                date = new Date(dateString);
+                caseDates.put(uuid, date);
+
+
+            }else return "null";
+        }
+
+        Date today = new Date();
+        int hours = (date.getHours() - today.getHours()) + 24;
+        int minutes = 0;
+        if(date.compareTo(today) <= 0){
+            return "null";
+        }else{
+
+            if(date.getMinutes() - today.getMinutes() <= 0){
+                hours --;
+                minutes = 60 - (today.getMinutes() - date.getMinutes());
+            }else{
+                minutes = date.getMinutes() - date.getMinutes();
+            }
+        }
+
+
+
+
+
+
+        return "§6" + hours + " §7Hours and §6" + minutes + " §7Minutes";
     }
 
 

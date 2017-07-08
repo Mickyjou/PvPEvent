@@ -2,7 +2,6 @@ package de.mickyjou.plugins.pvpevent.commands;
 
 import de.mickyjou.plugins.pvpevent.PvPEventPlugin;
 import de.mickyjou.plugins.pvpevent.utils.StatsGetter;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -34,8 +33,11 @@ public class ResponseCommand implements CommandExecutor
 
         }else if(args.length == 2){
 
-            String response = new StatsGetter(Bukkit.getOfflinePlayer(args[0])) != null ?  new StatsGetter(Bukkit.getOfflinePlayer(args[0])).get(args[1]) : "keine Angabe";
-            p.sendMessage(PvPEventPlugin.prefix + "Ergebnis: §7" + response );
+            if(args[0].equalsIgnoreCase("delete")){
+                StatsGetter stats = new StatsGetter(p);
+                stats.deleteTimeTask(args[1]);
+                p.sendMessage(PvPEventPlugin.prefix + "Succsesfully removed the entry " + args[1]);
+            }
 
         }else{
             p.sendMessage(PvPEventPlugin.prefix + "/response [args0] [args1]");

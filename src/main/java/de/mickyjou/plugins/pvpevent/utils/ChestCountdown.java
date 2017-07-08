@@ -11,6 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -82,6 +83,7 @@ public class ChestCountdown
                     player.teleport(Utils.getLocation("lobby"));
                     player.playSound(player.getLocation(), Sound.FIREWORK_TWINKLE2, 1.0F, 1.0F);
                     new StatsGetter(player).addTimeTask("caseopening",1,0,0);
+                    StatsGetter.caseDates.put(player.getUniqueId(),new Date(new StatsGetter(player).get("caseopening")));
                 }
             }, 40L);
         }
